@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(xcopy:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)",
+      "Bash(dir:*)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(del \"c:\\pruebadeploy\\public\\robots.txt\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

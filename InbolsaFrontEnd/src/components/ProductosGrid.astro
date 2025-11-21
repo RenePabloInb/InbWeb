@@ -1,0 +1,216 @@
+---
+const CATALOG = [
+  { id: 'sacos-convencionales',  title: 'Sacos Convencionales',  desc: 'Sacos Convencinales' },
+  { id: 'sacos-red', title: 'Sacos Red', desc: 'Sacos Red' },
+  { id: 'sacos-laminados', title: 'Sacos laminados', desc: 'Sacos laminados' },
+  { id: 'sacos-laminacion-premium', title: 'Sacos con laminacion Premium', desc: 'Sacos con laminacion Premium' },
+  { id: 'sacos-planos',   title: 'Sacos planos',   desc: 'Sacos planos' },
+  { id: 'sacos-fondo-cuadrado', title: 'Sacos con fondo cuadrado', desc: 'Sacos con fondo cuadrado' },
+  { id: 'big-bag-tubular',   title: 'Big Bag Tubular',   desc: 'Hilo de nylon resistente.' },
+  { id: 'big-bag-u-panel', title: 'Big Bag U Panel', desc: 'Hilo 100% algodón.' },
+  { id: 'big-bag-cuadripanel',   title: 'Big Bag Cuadripanel',   desc: 'Hilo de nylon resistente.' },
+  { id: 'big-bag-compartimentado', title: 'Big Bag  Compartimentada', desc: 'Hilo 100% algodón.' },
+  { id: 'sling-bag',   title: 'Sling Bag',   desc: 'Hilo de nylon resistente.' },
+  { id: 'tela-plana', title: 'Tela plana', desc: 'Hilo 100% algodón.' },
+  { id: 'tela-tubular',   title: 'Tela tubular',   desc: 'Hilo de nylon resistente.' },
+  { id: 'hilo-plano', title: 'Hilo Plano', desc: 'Hilo 100% algodón.' },
+  { id: 'hilo-multifilamentado',   title: 'Hilo multifilamentado',   desc: 'Hilo de nylon resistente.' },
+  { id: 'hilo-reforzado-pp', title: 'Hilo reforzado PP', desc: 'Hilo pp reforzado.' },
+  { id: 'hilo-reforzado-multifilamentado',   title: 'Hilo reforzado multifilamento',   desc: 'Hilo multifilamento reforzado.' },
+  { id: 'amarres', title: 'Amarres', desc: 'Amarres resistentes.' },
+];
+---
+
+<section id="productos" class="px-6 py-16 hidden">
+  <div class="mx-auto max-w-6xl">
+    <h2 class="text-3xl font-bold">Productos</h2>
+    <p class="text-slate-600 mt-2">Se personaliza con tu QR.</p>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-8" id="productosGrid">
+      {
+        CATALOG.map(p => (
+          <article
+            data-product-id={p.id}
+            class="rounded-2xl border bg-white p-5 shadow-sm hover:shadow transition"
+          >
+            <div class="text-xs text-slate-500 font-mono mb-1">{p.id}</div>
+            <h3 class="text-lg font-semibold">{p.title}</h3>
+            <p class="text-slate-600 mt-1">{p.desc}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <div id="productosVacios" class="hidden mt-10 rounded-xl border bg-amber-50 text-amber-900 px-4 py-3">
+      No hay productos habilitados para este acceso.
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+(function(){
+  const API_BASE = '/inbolsa-api/api';
+  const BACK_BASE = API_BASE.replace(/\/api$/, '');
+  var DEBUG = true; // true para caja de debug
+
+  function $all(s,root){return Array.prototype.slice.call((root||document).querySelectorAll(s));}
+  function $(s,root){return (root||document).querySelector(s);}
+  function getCookie(n){return (document.cookie.split('; ').find(r=>r.startsWith(n+'='))||'').split('=')[1]||'';}
+  function showEmptyIfNeeded(){
+    var anyVisible = $all('[data-product-id]').some(function(el){ return el.offsetParent !== null; });
+    $('#productosVacios').classList.toggle('hidden', anyVisible);
+  }
+  function box(msg){
+    if(!DEBUG) return;
+    var b=document.createElement('div');
+    b.style.cssText='position:fixed;left:12px;bottom:12px;z-index:99999;background:rgba(0,0,0,.85);color:#fff;padding:10px 12px;border-radius:10px;font:12px/1.35 ui-sans-serif,system-ui,Segoe UI,Roboto;max-width:420px';
+    b.innerHTML=msg;
+    document.body.appendChild(b);
+    setTimeout(function(){ try{ b.remove(); }catch(e){} }, 5000);
+  }
+  
+  function getGrantLS(){
+    try{
+      // Primero intentar desde localStorage
+      var raw = localStorage.getItem('inbolsa:qr:products');
+      if(raw) {
+        box('Leyendo productos desde localStorage');
+        var products = JSON.parse(raw);
+        if(Array.isArray(products)) {
+          return { allow: 'include', products: products };
+        }
+      }
+      
+      // Si no hay en localStorage específico, probar URL params
+      var url = new URL(location.href);
+      var pParam = url.searchParams.get('p');
+      if(pParam) {
+        box('Leyendo productos desde URL params');
+        var pList = pParam.split(',').filter(Boolean);
+        if(pList.length > 0) {
+          return { allow: 'include', products: pList };
+        }
+      }
+      
+      // Último recurso: bandera genérica de privado
+      if(localStorage.getItem('inbolsa:qr:ok') === '1') {
+        box('Modo privado activo, pero sin lista específica');
+        return { allow: 'all', products: [] };
+      }
+      
+      return null;
+    } catch(e) { 
+      box('Error leyendo productos: ' + e.message);
+      return null; 
+    }
+  }
+  
+  function saveGrant(g){ 
+    try{ 
+      box('Guardando grant: ' + JSON.stringify(g));
+      localStorage.setItem('inbolsa:qr:products', JSON.stringify(g.products || [])); 
+    } catch(e) { 
+      box('Error guardando: ' + e.message);
+    }
+  }
+
+  function fetchGrantFromBackend(){
+    box('Consultando backend para productos');
+    return fetch(BACK_BASE + '/access/payload', {
+      credentials:'include',
+      headers:{'Content-Type':'application/json'}
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d || !d.ok || !d.qr) {
+        box('Backend: sin datos válidos');
+        return null;
+      }
+      box('Backend respondió: ' + JSON.stringify(d.qr.payload));
+      var g = (d.qr.payload && d.qr.payload.section==='productos')
+        ? { 
+            allow: (d.qr.payload.allow || 'all'), 
+            products: Array.isArray(d.qr.payload.products) ? d.qr.payload.products : [], 
+            exp: (d.payload && d.payload.exp) || 0 
+          }
+        : { allow:'all', products:[], exp:(d.payload && d.payload.exp) || 0 };
+      saveGrant(g);
+      return g;
+    })
+    .catch(function(error){ 
+      box('Error consultando backend: ' + error.message);
+      return null; 
+    });
+  }
+
+  function applyFilter(grant){
+    // Unhide sección solo si hay grant (landing privada)
+    var section = document.getElementById('productos');
+    if (!grant) { 
+      box('Sin grant, ocultando sección');
+      section.classList.add('hidden'); 
+      return; 
+    }
+    
+    box('Aplicando grant, mostrando sección');
+    section.classList.remove('hidden');
+
+    var cards = $all('[data-product-id]');
+    if(!cards.length){
+      box('<b>Sin tarjetas detectadas</b>');
+      return;
+    }
+
+    if(grant.allow === 'all'){
+      box('<b>allow:</b> all - Mostrando todos los productos');
+      cards.forEach(function(el){ 
+        el.classList.remove('hidden'); 
+        el.style.display = ''; 
+      });
+      showEmptyIfNeeded();
+      return;
+    }
+
+    box('<b>allow:</b> include<br><b>permitidas:</b> ' + (grant.products || []).join(', '));
+    var allowed = new Set(grant.products || []);
+    var hidden = [];
+    cards.forEach(function(el){
+      var id = el.getAttribute('data-product-id') || '';
+      if(!allowed.has(id)){
+        el.classList.add('hidden');
+        el.style.display = 'none';
+        hidden.push(id);
+      } else {
+        el.classList.remove('hidden');
+        el.style.display = '';
+      }
+    });
+    showEmptyIfNeeded();
+  }
+
+  function main(){
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', main);
+      return;
+    }
+    
+    box('Inicializando ProductosGrid');
+
+    // 2. Si no hay en localStorage pero hay cookies de sesión, consultar backend
+    if(getCookie('qrauth') || getCookie('inb_access')){
+      box('Cookies de sesión detectadas, consultando backend');
+      fetchGrantFromBackend().then(function(g){
+        applyFilter(g || null);
+      });
+      return;
+    }
+    
+    // 3. Sin cookies ni localStorage, ocultamos la sección (landing pública)
+    box('Sin cookies ni localStorage, ocultando sección');
+    applyFilter(null);
+  }
+
+  main();
+})();
+</script>
+

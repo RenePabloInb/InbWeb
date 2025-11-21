@@ -1,0 +1,1661 @@
+---
+// src/pages/productos.astro
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = 'Productos';
+
+const CATALOG = [
+  { cat: 'Sacos PP', items: [
+    { id:'sacos-convencionales',   name:'Sacos Convencionales',   img:'/img/productos/Saco Convencional.webp' },
+    { id:'sacos-red', name:'Sacos de red', img:'/img/productos/Bolsa de Red.webp' },
+    { id:'sacos-laminados',  name:'Sacos laminados',  img:'/img/productos/Saco laminado.webp' },
+    { id:'sacos-laminacion-premium',  name:'Sacos con laminacion premium',  img:'/img/productos/Saco Laminado premium.webp' },
+    { id:'sacos-planos',  name:'Sacos planos',  img:'/img/productos/sacosplanos2.webp' },
+    { id:'sacos-fondo-cuadrado',  name:'Sacos con fondo cuadrado',  img:'/img/productos/Saco fondo cuadrado 1.webp' },
+  ]},
+  { cat: 'Big Bag', items: [
+    { id:'big-bag-tubular',  name:'Big Bag Tubular', img:'/img/productos/bigbagtubular.webp' },
+    { id:'big-bag-u-panel',    name:'Big Bag U Panel',   img:'/img/productos/bigbagupanel.webp' },
+    { id:'big-bag-cuadripanel',    name:'Big Bag cuadripanel',   img:'/img/productos/bigbagcuadripanel.webp' },
+    { id:'big-bag-compartimentada',    name:'Big Bag compartimentada',   img:'/img/productos/bigbagcompartimentada.webp' },
+    { id:'sling-bag',    name:'Sling Bag',   img:'/img/productos/slinbag1.webp' },
+  ]},
+  { cat: 'Telas', items: [
+    { id:'tela-plana',  name:'Tela plana', img:'/img/productos/tela-plana.webp' },
+    { id:'tela-tubular',    name:'Tela tubular',   img:'/img/productos/telatubular.webp' },
+  ]},
+  { cat: 'Hilos y sogas', items: [
+    { id:'hilo-plano',  name:'Hilo Plano (costura)', img:'/img/productos/Hilo pp 1.webp' },
+    { id:'hilo-multifilamentado',    name:'Hilo multifilamento',   img:'/img/productos/hilo-mulftifilamento.webp' },
+    { id:'hilo-reforzado-pp',    name:'Hilo reforzado PP',   img:'/img/productos/Hilo Entorcelado pp.webp' },
+    { id:'hilo-reforzado-multifilamento',    name:'Hilo reforzado multifilamento',   img:'/img/productos/Hilo entorcelado multifilamento.webp' },
+    { id:'amarres',    name:'Amarres',   img:'/img/productos/amarres.webp' },
+  ]},
+];
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+const PRODUCT_NAV = CATALOG.map((group) => ({
+  id: slugify(group.cat),
+  label: group.cat,
+}));
+
+const PRODUCT_DETAILS = {
+  'sacos-convencionales': {
+    name: 'Sacos Convencionales',
+    category: 'Sacos PP',
+    cover: '/img/productos/Saco Convencional.webp',
+    shortDescription: 'Saco de rafia versátil para cargas a granel y productos agroindustriales.',
+    summary: 'La estructura tramada permite flujo de aire constante, ideal para productos que continúan respirando en postcosecha.',
+    description: [
+      'Nuestros sacos convencionales están fabricados con tejido de polipropileno de alta resistencia, ofreciendo una protección confiable frente a la manipulación, el transporte y las condiciones ambientales. Diseñados con costura reforzada en la base o el fondo, garantizan una excelente capacidad de carga y durabilidad, convirtiéndolos en la elección ideal para diversas industrias como la agroindustrial, alimentaria y de materiales a granel.',
+      'Cada saco es elaborado bajo estrictos estándares de calidad, priorizando la resiliencia, la seguridad y la funcionalidad. Además, contamos con múltiples opciones de personalización, desde tamaños y gramajes hasta colores, impresiones y acabados especiales, para adaptar cada producto a las necesidades específicas de nuestros clientes.'
+
+    ],
+    features: [
+      'Impresión de hasta 8 colores',
+      'Formato: externa, laterales',
+      'Color de envase: Multicolor hasta transparente',
+      'Capacidad de envase: Hasta 60 Kg',
+      'Dimensiones: 40-80 cm de ancho (consulte por otras anchuras)',
+      'Opciones de costura: Lateral, superior, inferior hilo resaltado'
+    ],
+    applications: [
+      '/img/icons/Productos/Valvula (Small).PNG',
+      '/img/icons/Productos/Fuelle (Small).PNG',
+      '/img/icons/Productos/Costura personalizable (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Productos/Asas (Small).PNG',
+      '/img/icons/Usos/Granos (Small).PNG',
+      '/img/icons/Usos/Azucar (Small).PNG',
+      '/img/icons/Usos/Ganaderia (Small).PNG',
+      '/img/icons/Usos/Fertilizador (Small).PNG',
+      '/img/icons/Usos/Soya (Small).PNG',
+      '/img/icons/Usos/Petroquimicos (Small).PNG',
+      '/img/icons/Usos/Tuberculos (Small).PNG',
+    ],
+    specs: [
+      { label: 'Gramaje disponible', value: '70 a 110 g/m²' },
+      { label: 'Capacidad de carga', value: '25 a 50 kg' },
+      { label: 'Formato', value: 'Plano con opción de fuelles' },
+      { label: 'Impresión', value: 'Flexografía hasta 3 colores por cara' }
+    ],
+    gallery: [
+      '/img/productos/Saco Convencional.webp',
+      '/img/productos/Saco Convencional (2).webp',
+      '/img/productos/Saco convencional (3).webp',
+      '/img/productos/Saco convencional con fuelle.webp'
+    ]
+  },
+  'sacos-red': {
+    name: 'Sacos de red',
+    category: 'Sacos PP',
+    cover: '/img/productos/Bolsa de Red.webp',
+    shortDescription: 'Bolsa mallada con excelente ventilación para frutas y hortalizas.',
+    summary: 'La estructura tramada permite flujo de aire constante, ideal para productos que continúan respirando en postcosecha.',
+    description: [
+      'Los sacos tejidos tipo red ofrecen resistencia superior y excelente ventilación, garantizando una manipulación segura en cada etapa del proceso logístico. Su diseño ligero pero robusto los convierte en una solución eficiente y confiable para la industria agronómica, especialmente en el envasado y transporte de productos agrícolas como papas, cebollas y otros tubérculos.',
+      'Gracias a su estructura flexible, permiten un llenado y vaciado ágil, reduciendo tiempos de operación y optimizando el manejo del producto. Además, su transparencia y acabado uniforme facilitan la identificación visual del contenido, aportando un valor estético y funcional que refuerza la presentación del producto final.'
+    ],
+    features: [
+      'Color de envase: multicolor',
+      'Capacidad de envases: Hasta 30 Kg',
+      'Dimensiones: 35-50 cm de ancho (consulte por otras anchuras)',
+      'Opción de Hilo Resaltante'
+    ],
+    applications: [
+      '/img/icons/Usos/Tuberculos (Small).PNG',
+    ],
+    specs: [
+      { label: 'Anchos disponibles', value: '30 a 60 cm' },
+      { label: 'Metraje por rollo', value: '100 a 600 m' },
+      { label: 'Carga recomendada', value: '5 a 20 kg' },
+      { label: 'Colores', value: 'Personalizados, opaco o bicolor' }
+    ],
+    gallery: [
+      '/img/productos/Bolsa de Red.webp'
+    ]
+  },
+  'sacos-laminados': {
+    name: 'Sacos laminados',
+    category: 'Sacos PP',
+    cover: '/img/productos/Saco laminado.webp',
+    shortDescription: 'Saco tejido laminado en coextrusión para proteger contra humedad y polvo.',
+    summary: 'Combina rafia de resistencia mecánica con film coex para lograr barrera ante finos y agentes climáticos.',
+    description: [
+      'Nuestros sacos laminados representan una solución práctica, resistente y versátil para el envasado y transporte de una amplia variedad de productos. Fabricados con tejido de polipropileno recubierto por una capa laminada, ofrecen una excelente barrera contra la humedad, el polvo y la suciedad, manteniendo la integridad del contenido durante todo el proceso logístico.',
+      'Gracias a nuestra tecnología de micro perforación de precisión, estos sacos permiten la transpiración controlada del producto, evitando la acumulación de humedad y al mismo tiempo impidiendo fugas a través del tejido. Este equilibrio entre protección y ventilación los hace ideales para el envasado de alimentos balanceados, harinas, granos y otros productos que requieren conservación y presentación impecable.'
+    ],
+    features: [
+      'Impresión hasta 8 colores',
+      'Tipo de impresión: interno o externo',
+      'Micro perforación opcional',
+      'Laminación maté o brillante',
+      'Capacidad de envases: Hasta 60 kg',
+      'Dimensiones: 40-80 cm de ancho (consulte por otras anchuras)',
+      'Opciones de costura: Lateral, superior, inferior hilo resaltado'
+    ],
+    applications: [
+      '/img/icons/Productos/Laminacion (Small).PNG',
+      '/img/icons/Productos/Asas (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Productos/Costura personalizable (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Productos/Fuelle (Small).PNG',
+      '/img/icons/Usos/Azucar (Small).PNG',
+      '/img/icons/Usos/Granos (Small).PNG',
+      '/img/icons/Usos/Ganaderia (Small).PNG',
+      '/img/icons/Usos/Fertilizador (Small).PNG',
+      '/img/icons/Usos/Soya (Small).PNG',
+      '/img/icons/Usos/Petroquimicos (Small).PNG',
+      '/img/icons/Usos/Tuberculos (Small).PNG',
+    ],
+    specs: [
+      { label: 'Gramaje tejido', value: '80 a 120 g/m²' },
+      { label: 'Espesor film', value: '20 a 40 micras' },
+      { label: 'Capacidades', value: '15 a 50 kg' },
+      { label: 'Formatos disponibles', value: 'Plano, con fuelles o valvulado' }
+    ],
+    gallery: [
+      '/img/productos/Saco laminado.webp',
+      '/img/productos/saco laminado 3.webp',
+      '/img/productos/Saco laminado 4.webp',
+      '/img/productos/Saco laminado 5.webp',
+      '/img/productos/Saco Laminado 6.webp'
+    ]
+  },
+  'sacos-laminacion-premium': {
+    name: 'Sacos con laminación premium',
+    category: 'Sacos PP',
+    cover: '/img/productos/Saco Laminado premium.webp',
+    shortDescription: 'Acabado superior con brillo o tacto mate para productos de alto valor.',
+    summary: 'Incluye láminas coex de alto brillo, mate o soft touch y relieve localizado para resaltar la marca.',
+    description: [
+      'Nuestros sacos laminados premium con película BOPP representan la fusión perfecta entre resistencia, funcionalidad y presentación premium. Su acabado y su capacidad para exhibir impresiones de alta resolución con calidad fotográfica los convierten en una opción ideal para marcas que buscan destacar su producto en el punto de venta.',
+      'Fabricados con tejido de polipropileno de alta durabilidad y una laminación BOPP de última generación, estos sacos ofrecen una excelente protección frente a la humedad, el polvo y la manipulación, sin comprometer la estética. La tecnología de impresión avanzada permite reproducir imágenes, colores y detalles con una nitidez excepcional, fortaleciendo la identidad visual y el atractivo comercial de cada producto.'
+    ],
+    features: [
+      'Impresión realística',
+      'Tipo de impresión: laminado',
+      'Formato: impresión lateral',
+      'Fuelle lateral',
+      'Micro perforación opcional',
+      'Opción de Asas',
+      'Capacidad de envases: Hasta 60kg',
+      'Dimensiones: 40-80 cm de ancho (consulte por otras anchuras)',
+      'Opciones de costura: Lateral, superior, inferior hilo resaltado'
+
+    ],
+    applications: [
+      '/img/icons/Productos/Laminacion premium (Small).PNG',
+      '/img/icons/Productos/Fondo y superior cuadrado (Small).PNG',
+      '/img/icons/Productos/Asas (Small).PNG',
+      '/img/icons/Productos/Impression premium (Small).PNG',
+      '/img/icons/Productos/Costura personalizable (Small).PNG',
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Usos/Agro premium (Small).PNG',
+      '/img/icons/Usos/Comida de masacotas (Small).PNG',
+    ],
+    specs: [
+      { label: 'Gramaje tejido', value: '90 a 130 g/m²' },
+      { label: 'Film decorativo', value: 'BOPP 18-25 micras' },
+      { label: 'Anchos', value: '40 a 65 cm' },
+      { label: 'Impresión', value: 'Alta definición en 8 colores' }
+    ],
+    gallery: [
+      '/img/productos/Saco Laminado premium.webp',
+      '/img/productos/Saco laminado premium 2.webp',
+      '/img/productos/Saco laminado premium 3.webp',
+      '/img/productos/Saco Laminado premium6.webp',
+    ]
+  },
+  'sacos-planos': {
+    name: 'Sacos planos',
+    category: 'Sacos PP',
+    cover: '/img/productos/sacosplanos.webp',
+    shortDescription: 'Bolsa plana sin fuelles para llenado directo y apilado en estibas.',
+    summary: 'La configuración plana optimiza el llenado por gravedad y ofrece soporte uniforme en pallet.',
+    description: [
+      'Fabricados con tejido de polipropileno de alta resistencia, nuestros sacos planos con costura tipo "L" ofrecen una solución segura, confiable y duradera para el empaque, transporte y almacenamiento de productos a granel. Su diseño robusto y su confección precisa los convierten en una opción versátil para múltiples sectores industriales, desde el agropecuario hasta el minero.',
+      'Dentro de esta línea, destaca nuestro modelo metalero, especialmente desarrollado para soportar condiciones de carga extremas y garantizar la máxima seguridad en el transporte de metales preciosos y materiales de alto valor. Cada saco se produce bajo estrictos estándares de calidad, asegurando una resistencia superior al desgarro, excelente capacidad de carga y larga vida útil.'
+    ],
+    features: [
+      'Impresión de hasta 8 colores',
+      'Tipo de impresión: interno o externo',
+      'Costura tipo L',
+      'Opción de Liner de plástico tejido',
+      'Capacidad de Envases: Hasta 60 Kg',
+      'Dimensiones: 40-80 cm de ancho (consulte por otras anchuras)'
+    ],
+    applications: [
+      '/img/icons/Productos/Lijero (Small).PNG',
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Usos/Metales preciosos (Small).PNG',
+      '/img/icons/Usos/Agro premium (Small).PNG',
+    ],
+    specs: [
+      { label: 'Anchos', value: '35 a 60 cm' },
+      { label: 'Largos', value: '55 a 110 cm' },
+      { label: 'Costura inferior', value: 'Doble cadena con refuerzo' },
+      { label: 'Tolva', value: 'Compatible con llenadoras rectas' }
+    ],
+    gallery: [
+      '/img/productos/sacosplanos2.webp',
+      '/img/productos/sacosplanos3.webp'
+    ]
+  },
+  'sacos-fondo-cuadrado': {
+    name: 'Sacos con fondo cuadrado',
+    category: 'Sacos PP',
+    cover: '/img/productos/Saco fondo cuadrado 1.webp',
+    shortDescription: 'Formato tipo block bottom para exhibición en punto de venta.',
+    summary: 'El fondo cuadrado permite que el saco quede erguido y mejora la presentación en isla o estantería.',
+    description: [
+      'La más reciente incorporación a nuestra línea de productos, las bolsas con fondo cuadrado representan un avance en diseño, funcionalidad y presentación. Desarrolladas con tecnología de punta, estas bolsas ofrecen una base estable y un formato autoportante, que optimiza el llenado, el apilado y la exhibición del producto final.',
+      'Su estructura laminada y su acabado de alta calidad brindan una presentación premium, ideal para marcas que buscan destacar en estanterías o entornos comerciales exigentes. Son particularmente eficaces para productos en polvo —como cemento, harina y alimentos balanceados— gracias a su sellado hermético y su resistencia superior.'
+    ],
+    features: [
+      'Impresión de hasta 8 colores',
+      'Tipo de impresión: interno o externo',
+      'Formato: Lateral, franja superior y inferior',
+      'Laminación: matte o brillante',
+      'Opción de microperforación',
+      'Válvula soldada en el interior del saco',
+      'Capacidad de envases: Hasta 60 Kg',
+      'Dimensiones: 20-60 cm de ancho (consulte por otras anchuras)'
+    ],
+    applications: [
+      '/img/icons/Productos/Laminacion (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Productos/Valvula (Small).PNG',
+      '/img/icons/Productos/Fondo y superior cuadrado (Small).PNG',
+      '/img/icons/Usos/Cemento (Small).PNG',
+      '/img/icons/Usos/Harina (Small).png',
+    ],
+    specs: [
+      { label: 'Capacidades', value: '20, 25 y 50 kg' },
+      { label: 'Sistema de cierre', value: 'Válvula interna con soldado térmico' },
+      { label: 'Perforaciones', value: 'Microperforado de 0.5 mm opcional' },
+      { label: 'Línea', value: 'Compatible con llenadoras AD Star' }
+    ],
+    gallery: [
+      '/img/productos/Saco fondo cuadrado 1.webp',
+      '/img/productos/Saco fondo cuadrado 2.webp',
+      '/img/productos/Saco fondo cuadrado 3.webp',
+      '/img/productos/Fondo cuadrado 4.webp',
+      '/img/productos/Fondo cuadrado 5.webp'
+    ]
+  },
+  'big-bag-tubular': {
+    name: 'Big Bag Tubular',
+    category: 'Big Bag',
+    cover: '/img/productos/bigbagtubular.webp',
+    shortDescription: 'FIBC de cuerpo continuo sin costuras laterales para maximizar resistencia.',
+    summary: 'Fabricado con rafia tubular de polipropileno de alta tenacidad y carga segura hasta 1500 kg.',
+    description: [
+      'Nuestro Big Bag tubular es la solución más versátil y eficiente para el manejo de productos a granel en alto volumen. Fabricado con tejido tubular de polipropileno de alta resistencia, ofrece seguridad, agilidad y fuerza superior en cada operación de carga, transporte y almacenamiento. Gracias a su diseño sin costuras laterales, este modelo reduce los puntos de tensión y maximiza su capacidad de carga, garantizando un desempeño confiable incluso bajo condiciones exigentes.',
+      'Su estructura permite un apilado estable en múltiples niveles, optimizando el uso del espacio en bodegas y centros de distribución. Con diversas opciones de personalización en su construcción —como tipos de válvula, forros interiores, revestimientos o ventilación— cada Big Bag tubular se adapta a las necesidades específicas de su industria, asegurando eficiencia y conveniencia en cada etapa del proceso logístico.'
+    ],
+    features: [
+      'Capacidad de envase: 500-2,500 kg',
+      'Permite apilamiento',
+      'Liner interior',
+      'Sling de alta carga'
+    ],
+    applications: [
+      '/img/icons/Productos/Laminacion (Small).PNG',
+      '/img/icons/Productos/Proteccion UV (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Productos/One way (Small).PNG',
+      '/img/icons/Productos/Multiway (Small).PNG',
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Productos/Bolsillo de plastico (Small).PNG',
+      '/img/icons/Usos/Azucar (Small).PNG',
+      '/img/icons/Usos/Harina (Small).png',
+      '/img/icons/Usos/Soya (Small).PNG',
+      '/img/icons/Usos/Metales preciosos (Small).PNG',
+      '/img/icons/Usos/Granos (Small).PNG',
+      '/img/icons/Usos/Petroquimicos (Small).PNG',
+      '/img/icons/Usos/Ganaderia (Small).PNG',
+      '/img/icons/Usos/Cemento (Small).PNG',
+      '/img/icons/Usos/Semillas (Small).PNG',
+      '/img/icons/Usos/Construccion (Small).PNG',
+    ],
+    specs: [
+      { label: 'Factor de seguridad', value: '5:1 o 6:1 según ISO 21898' },
+      { label: 'Carga recomendada', value: '500 a 1500 kg' },
+      { label: 'Boca de carga', value: 'Cilíndrica, en falda o con válvula' },
+      { label: 'Descarga', value: 'Válvula circular con amarra' }
+    ],
+    gallery: [
+      '/img/productos/bigbagdiagram1.webp',
+      '/img/productos/bigbagdiagram2.webp',
+      '/img/productos/bigbagdiagram3.webp',
+      '/img/productos/bigbagdiagram4.webp',
+      '/img/productos/bigbagdiagram5.webp',
+      '/img/productos/bigbagdiagram6.webp',
+      '/img/productos/bigbagdiagram7.webp'
+    ]
+  },
+  'big-bag-u-panel': {
+    name: 'Big Bag U Panel',
+    category: 'Big Bag',
+    cover: '/img/productos/bigbagupanel.webp',
+    shortDescription: 'Construcción en forma de U para estabilidad dimensional y armado rápido.',
+    summary: 'Tres paneles (uno en forma de U y dos laterales) que aportan capacidad de carga uniforme y excelente apilabilidad.',
+    description: [
+      'El Big Bag con costura tipo U-Panel representa el punto de equilibrio perfecto entre la estructura del Big Bag tubular y la estabilidad del Big Bag tipo Quadri Panel. Su diseño inteligente, con un cuerpo formado por un panel en forma de "U" que cubre la base y dos laterales, brinda mayor resistencia, forma cuadrada estable y excelente aprovechamiento del espacio durante el llenado, transporte y almacenamiento. Gracias a esta construcción, el saco mantiene su geometría definida incluso bajo carga completa, garantizando un desempeño confiable y una presentación limpia en el apilado.',
+      'Su versatilidad lo convierte en una opción ideal para productos granulados, en polvo o de alta densidad, combinando practicidad operativa con una capacidad de carga sobresaliente. Cada Big Bag tipo U-Panel puede personalizarse según las necesidades de su industria: asas, válvulas de carga o descarga, forros interiores, tratamientos antiestáticos y más, todo orientado a maximizar la eficiencia y seguridad del proceso.'
+
+    ],
+    features: [
+      'Capacidad de envase: 500-2,500 kg',
+      'Impresión en cuatro caras',
+      'Opción de Liner interno',
+      'Tela plana tejida para refuerzo adicional',
+      'Mantiene su forma después de llenar'
+    ],
+    applications: [
+      '/img/icons/Productos/Laminacion (Small).PNG',
+      '/img/icons/Productos/Proteccion UV (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Productos/Multiway (Small).PNG',
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Productos/Bolsillo de plastico (Small).PNG',
+      '/img/icons/Productos/Reforzado (Small).PNG',
+      '/img/icons/Usos/Alimentos (Small).png',
+      '/img/icons/Usos/Soya (Small).PNG',
+      '/img/icons/Usos/Semillas (Small).PNG',
+      '/img/icons/Usos/Petroquimicos (Small).PNG',
+      '/img/icons/Usos/Ganaderia (Small).PNG',
+      '/img/icons/Usos/Metales preciosos (Small).PNG',
+    ],
+    specs: [
+      { label: 'Capacidad de carga', value: '500 a 2000 kg' },
+      { label: 'Dimensión estándar', value: '90 x 90 x 110 cm' },
+      { label: 'Asas', value: '4 asas de 30 o 40 cm' },
+      { label: 'Liner interno', value: 'Disponible en PE liso o sellado' }
+    ],
+    gallery: [
+      '/img/productos/bigbagdiagram1.webp',
+      '/img/productos/bigbagdiagram2.webp',
+      '/img/productos/bigbagdiagram3.webp',
+      '/img/productos/bigbagdiagram4.webp',
+      '/img/productos/bigbagdiagram5.webp',
+      '/img/productos/bigbagdiagram6.webp',
+      '/img/productos/bigbagdiagram7.webp'
+    ]
+  },
+  'big-bag-cuadripanel': {
+    name: 'Big Bag Quadri-Panel',
+    category: 'Big Bag',
+    cover: '/img/productos/bigbagcuadripanel.webp',
+    shortDescription: 'FIBC de cuatro paneles cosidos para mantener forma cúbica.',
+    summary: 'Diseñado para optimizar espacio en contenedores y transporte terrestre gracias a caras reforzadas.',
+    description: [
+      'Diseñado con precisión estructural y desempeño industrial en mente, el Big Bag Quadri-Panel se destaca por su forma perfectamente definida y su resistencia superior. Su construcción a partir de cuatro paneles de tejido de polipropileno cosidos con exactitud permite que la bolsa mantenga su forma cuadrada incluso durante el llenado y transporte, brindando estabilidad, facilidad de apilado y una presentación uniforme. Esta tecnología ofrece una solución eficiente y robusta para el envasado de productos a granel, en especial aquellos que requieren almacenamiento compacto y manipulación segura.',
+      'Gracias a su estructura reforzada, los Big Bags Quadri-Panel distribuyen la carga de manera equilibrada, minimizando la deformación y extendiendo la vida útil del envase. Con múltiples opciones de configuración —válvulas de carga y descarga, forros interiores, o ventilación— cada Big Bag se desarrolla a medida de su industria y aplicación, garantizando rendimiento y conveniencia en cada operación.'
+    ],
+    features: [
+      'Capacidad de envase: 500-2,500 kg',
+      'Impresión en cuatro caras',
+      'Opción de Liner interno',
+      'Envase tejido para refuerzo adicional',
+      'Mantiene su forma después de llenar'
+    ],
+    applications: [
+      '/img/icons/Productos/Laminacion (Small).PNG',
+      '/img/icons/Productos/Proteccion UV (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Productos/Multiway (Small).PNG',
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Productos/Bolsillo de plastico (Small).PNG',
+      '/img/icons/Productos/Reforzado (Small).PNG',
+      '/img/icons/Usos/Alimentos (Small).png',
+      '/img/icons/Usos/Soya (Small).PNG',
+      '/img/icons/Usos/Semillas (Small).PNG',
+      '/img/icons/Usos/Petroquimicos (Small).PNG',
+      '/img/icons/Usos/Ganaderia (Small).PNG',
+      '/img/icons/Usos/Metales preciosos (Small).PNG',
+    ],
+    specs: [
+      { label: 'Carga útil', value: 'Hasta 1500 kg' },
+      { label: 'Factor de seguridad', value: '5:1' },
+      { label: 'Tejido', value: 'Polipropileno 160 g/m²' },
+      { label: 'Aperturas', value: 'Superior con válvula o falda completa' }
+    ],
+    gallery: [
+      '/img/productos/bigbagdiagram1.webp',
+      '/img/productos/bigbagdiagram2.webp',
+      '/img/productos/bigbagdiagram3.webp',
+      '/img/productos/bigbagdiagram4.webp',
+      '/img/productos/bigbagdiagram5.webp',
+      '/img/productos/bigbagdiagram6.webp',
+      '/img/productos/bigbagdiagram7.webp'
+    ]
+  },
+  'big-bag-compartimentada': {
+    name: 'Big Bag Compartimentado',
+    category: 'Big Bag',
+    cover: '/img/productos/bigbagcompartimentada.webp',
+    shortDescription: 'FIBC con tabiques internos que sostienen forma y distribuyen la carga.',
+    summary: 'Incluye paneles internos cosidos que impiden el abombamiento y favorecen apilados perfectos.',
+    description: [
+      'Nuestros Big Bags compartimentados están diseñadas con trabas internas que mantienen una forma cuadrada y estable, optimizando el embalaje, transporte y almacenamiento. Esta estructura interna permite que el saco conserve su geometría incluso bajo carga completa, facilitando el apilado y ofreciendo una apariencia ordenada y profesional en todo momento. Gracias a su diseño reforzado, las bolsas compartimentadas brindan mayor agilidad y seguridad en la transportación, reduciendo la fricción entre unidades y protegiendo el contenido.',
+      'Esto resulta especialmente beneficioso para productos sensibles o de alta calidad, que requieren una manipulación cuidadosa y condiciones de conservación controladas. Cada Big Bag compartimentada puede personalizarse según las necesidades de su industria, con opciones en tipos de válvula, forros interiores, antiestáticos y ventilación. Esta flexibilidad convierte a nuestras bolsas en una solución confiable, eficiente y adaptable para los sectores más exigentes.'
+    ],
+    features: [
+      'Capacidad de envase: 500-2,500 kg',
+      'Trabas interiores para refuerzo de forma',
+      'Impresiones en cuatro lados',
+      'Opción de Liner interior',
+      'Mantiene su forma después de llenar'
+    ],
+    applications: [
+      '/img/icons/Productos/Laminacion (Small).PNG',
+      '/img/icons/Productos/Proteccion UV (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Productos/Multiway (Small).PNG',
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Productos/Bolsillo de plastico (Small).PNG',
+      '/img/icons/Productos/Reforzado (Small).PNG',
+      '/img/icons/Usos/Alimentos (Small).png',
+      '/img/icons/Usos/Soya (Small).PNG',
+      '/img/icons/Usos/Semillas (Small).PNG',
+      '/img/icons/Usos/Petroquimicos (Small).PNG',
+      '/img/icons/Usos/Ganaderia (Small).PNG',
+      '/img/icons/Usos/Metales preciosos (Small).PNG',
+    ],
+    specs: [
+      { label: 'Factor de seguridad', value: '5:1 o 6:1' },
+      { label: 'Dimensión sugerida', value: '95 x 95 x 120 cm' },
+      { label: 'Boca de carga', value: 'Con válvula o tapa completa' },
+      { label: 'Boca de descarga', value: 'Válvula de 35 cm con cordón' }
+    ],
+    gallery: [
+      '/img/productos/bigbagdiagram1.webp',
+      '/img/productos/bigbagdiagram2.webp',
+      '/img/productos/bigbagdiagram3.webp',
+      '/img/productos/bigbagdiagram4.webp',
+      '/img/productos/bigbagdiagram5.webp',
+      '/img/productos/bigbagdiagram6.webp',
+      '/img/productos/bigbagdiagram7.webp'
+    ]
+  },
+  'sling-bag': {
+    name: 'Sling Bag',
+    category: 'Big Bag',
+    cover: '/img/productos/slinbag1.webp',
+    shortDescription: 'Bolsa tipo eslinga económica para cargas medianas y picking rápido.',
+    summary: 'Diseño ligero con dos asas continuas que envuelven el cuerpo para manipular sin pallets.',
+    description: [
+      'Nuestra solución Sling Bag es una alternativa moderna, práctica y ligera al uso de pallets tradicionales de madera. Diseñada para ofrecer versatilidad y eficiencia, permite una manipulación más ágil de productos a granel, facilitando las tareas de carga, descarga y almacenamiento con un enfoque más seguro y ergonómico.',
+      'Su estructura resistente, confeccionada con tejido de polipropileno de alta tenacidad, brinda una excelente capacidad de carga sin comprometer la durabilidad ni la seguridad del contenido. Gracias a su diseño funcional, los Sling Bags permiten movilizar grandes volúmenes de producto con menor esfuerzo, optimizando tiempos y reduciendo costos operativos en toda la cadena logística.'
+    ],
+    features: [
+      'Capacidad: 1,000-2,000 kg',
+      'Tejido de PP resistente',
+      'Múltiples opciones de colores y combinaciones'
+    ],
+    applications: [
+      '/img/icons/Productos/Reforzado (Small).PNG',
+      '/img/icons/Usos/Construccion (Small).PNG',
+      '/img/icons/Usos/Embalage (Small).PNG',
+      '/img/icons/Usos/Almacenaje (Small).PNG',
+      '/img/icons/Usos/Metales preciosos (Small).PNG',
+      '/img/icons/Usos/Petroquimicos (Small).PNG',
+    ],
+    specs: [
+      { label: 'Capacidad de carga', value: '1000 a 2000 kg' },
+      { label: 'Longitud de eslinga', value: '90 a 110 cm' },
+      { label: 'Tejido', value: 'Polipropileno 140 g/m²' },
+      { label: 'Opciones', value: 'Con o sin faldón superior' }
+    ],
+    gallery: [
+      '/img/productos/Sling bag 1.webp',
+      '/img/productos/Slingbag 2.webp',
+      '/img/productos/Slingbag 3.webp',
+      '/img/productos/slinbag4.jpeg',
+      '/img/productos/slinbag5.jpeg'
+    ]
+  },
+  'tela-tubular': {
+    name: 'Tela tubular',
+    category: 'Telas',
+    cover: '/img/productos/telatubular.webp',
+    shortDescription: 'Tejido circular continuo ideal para big bags y mangas protectoras.',
+    summary: 'Se fabrica en telares circulares de última generación para lograr paredes homogéneas y alta resistencia.',
+    description: [
+      'Nuestra tela tubular de polipropileno está fabricada con hilo plano de alta tenacidad, disponible en diversos gramajes y anchos para adaptarse a distintos requerimientos de confección y empaque. Su diseño continuo sin costuras laterales garantiza una mayor resistencia al rasgado y a la tracción, ofreciendo una solución sólida y confiable para la elaboración de sacos tejidos, recubrimientos y aplicaciones industriales de alto rendimiento.',
+      'Gracias a las propiedades del polipropileno, esta tela proporciona ligereza, durabilidad y resistencia frente a la humedad y los agentes externos, garantizando un rendimiento confiable incluso en condiciones exigentes.'
+    ],
+    features: [
+      'Dimensiones: 40-150 cm de ancho (consulte por otras anchuras)',
+      'Opción de Tela pesada o liviana',
+      'Protección UV para uso en el exterior',
+      'Laminación con opción de micro perforación'
+    ],
+    applications: [
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Laminacion (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Productos/Proteccion UV (Small).PNG',
+      '/img/icons/Usos/Almacenaje (Small).PNG',
+      '/img/icons/Usos/Embalage (Small).PNG',
+      '/img/icons/Usos/Costura (Small).PNG',
+    ],
+    specs: [
+      { label: 'Diámetro plano', value: '60 a 220 cm' },
+      { label: 'Gramaje', value: '110 a 220 g/m²' },
+      { label: 'Bobina', value: 'Hasta 400 kg' },
+      { label: 'Acabados', value: 'Corona, antideslizante, anti UV' }
+    ],
+    gallery: [
+      '/img/productos/telatubular.webp',
+      '/img/productos/telared.webp',
+      '/img/productos/telared2.webp'
+    ]
+  },
+  'tela-plana': {
+    name: 'Tela plana',
+    category: 'Telas',
+    cover: '/img/productos/tela-plana.webp',
+    shortDescription: 'Tela plana tejida para refuerzo adicional en aplicaciones industriales.',
+    summary: 'Tejido plano de polipropileno con alta resistencia y durabilidad para múltiples usos.',
+    description: [
+      'Nuestra tela plana de polipropileno ofrece una superficie uniforme y resistente, ideal para aplicaciones que requieren un material robusto y versátil. Fabricada con hilo de alta calidad, proporciona excelente resistencia a la tracción y durabilidad en condiciones exigentes.',
+      'Esta tela es perfecta para uso en construcción, agricultura, embalaje industrial y otros sectores que demandan materiales confiables y de larga duración.'
+    ],
+    features: [
+      'Dimensiones: 40-200 cm de ancho',
+      'Alta resistencia a la tracción',
+      'Protección UV disponible',
+      'Superficie uniforme y lisa',
+      'Disponible en diferentes gramajes',
+      'Personalizable según necesidades'
+    ],
+    applications: [
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Laminacion (Small).PNG',
+      '/img/icons/Productos/Impression (Small).PNG',
+      '/img/icons/Productos/Ventilacion (Small).PNG',
+      '/img/icons/Productos/Proteccion UV (Small).PNG',
+      '/img/icons/Usos/Construccion (Small).PNG',
+      '/img/icons/Usos/Agro premium (Small).PNG',
+      '/img/icons/Usos/Almacenaje (Small).PNG',
+      '/img/icons/Usos/Embalage (Small).PNG',
+    ],
+    specs: [
+      { label: 'Gramaje', value: '70 a 130 g/m²' },
+      { label: 'Anchos', value: '80 a 200 cm' },
+      { label: 'Color', value: 'Natural, blanco o personalizado' },
+      { label: 'Tratamientos', value: 'Anti UV, antiestático' }
+    ],
+    gallery: [
+      '/img/productos/telaplana.webp',
+      '/img/productos/tela-plana.webp',
+      '/img/productos/slinbag1.webp'
+    ]
+  },
+  'hilo-plano': {
+    name: 'Hilo Plano (costura)',
+    category: 'Hilos y sogas',
+    cover: '/img/productos/Hilo pp 1.webp',
+    shortDescription: 'Bobina de cinta de alta resistencia diseñada para máxima durabilidad.',
+    summary: 'Fabricado con polímeros de primera calidad, este hilo se distingue por su excelente resistencia a la tracción.',
+    description: [
+      'Nuestro hilo plano de polipropileno es una bobina de cinta de alta resistencia, diseñada para ofrecer máxima durabilidad y desempeño constante en condiciones exigentes. Fabricado con polímeros de primera calidad, este hilo se distingue por su excelente resistencia a la tracción, la humedad y los factores ambientales, asegurando un rendimiento confiable incluso en entornos de alta demanda industrial.'
+    ],
+    features: [
+      'Capacidad: 1500 Denier',
+      'Disponible en rojo, azul, amarillo, verde, y blanco'
+    ],
+    applications: [
+      '/img/icons/Usos/Amarre (Small).png',
+      '/img/icons/Usos/Costura (Small).PNG',
+      '/img/icons/Usos/Almacenaje (Small).PNG',
+    ],
+    specs: [
+      { label: 'Título', value: '1500 den' },
+      { label: 'Resistencia', value: 'Hasta 7.5 kg' },
+      { label: 'Color', value: 'Rojo, azul, amarillo, verde, blanco' },
+      { label: 'Lubricación', value: 'Seco o con acabado siliconado' }
+    ],
+    gallery: [
+      '/img/productos/Hilo pp 1.webp',
+      '/img/productos/Hilo pp 2.webp',
+      '/img/productos/Hilo pp 3.webp'
+    ]
+  },
+  'hilo-multifilamentado': {
+    name: 'Hilo multifilamento',
+    category: 'Hilos y sogas',
+    cover: '/img/productos/hilo-mulftifilamento.webp',
+    shortDescription: 'Hilo de polipropileno de alto número de filamentos para costuras exigentes.',
+    summary: 'Proporciona elasticidad controlada y terminaciones suaves, ideal para cosidos que requieren sellado hermético.',
+    description: [
+      'Nuestro hilo multifilamento de polipropileno se fabrica con fibras continuas de alta tenacidad, ofreciendo una combinación excepcional de resistencia, ligereza y suavidad. Su textura lisa y uniforme permite un deslizamiento fluido y controlado, ideal para aplicaciones que requieren precisión, estética y durabilidad.',
+      'Gracias a su estructura multifilamento, este hilo ofrece una mayor flexibilidad y absorción de impacto, conservando su integridad incluso bajo condiciones de uso intensivo. Resistente a la humedad, a la abrasión y a los factores ambientales, el hilo multifilamento de PP garantiza un rendimiento confiable y de larga duración.'
+    ],
+    features: [
+      'Disponible en azul y blanco'
+    ],
+    applications: [
+      '/img/icons/Usos/Amarre (Small).png',
+      '/img/icons/Usos/Costura (Small).PNG',
+      '/img/icons/Usos/Almacenaje (Small).PNG',
+    ],
+    specs: [
+      { label: 'Título', value: '840 a 2100 den' },
+      { label: 'Resistencia', value: 'Hasta 9.5 kg' },
+      { label: 'Presentación', value: 'Bobinas de 5 kg' },
+      { label: 'Color', value: 'Azul y blanco' }
+    ],
+    gallery: [
+      '/img/productos/hilo-mulftifilamento.webp',
+      '/img/productos/Hilo entorcelado multifilamento.webp',
+      '/img/productos/hiloscostura.webp',
+      '/img/colors/100.webp'
+    ]
+  },
+  'hilo-reforzado-pp': {
+    name: 'Hilo reforzado PP',
+    category: 'Hilos y sogas',
+    cover: '/img/productos/Hilo Entorcelado pp.webp',
+    shortDescription: 'Hilo entorcelado de polipropileno con rendimiento superior y resistencia excepcional.',
+    summary: 'Diseñado para costuras sometidas a vibración o desgaste continuo en transporte.',
+    description: [
+      'Nuestro hilo entorcelado de polipropileno está diseñado para ofrecer un rendimiento superior y una resistencia excepcional, posicionándose como una alternativa de alto desempeño frente a hilos elaborados con otros materiales. Fabricado mediante un proceso de torsión controlada, este hilo combina firmeza, uniformidad y durabilidad, asegurando una costura limpia y constante en cada aplicación.',
+      'Su estructura trenzada le otorga una mayor estabilidad y resistencia al desgaste, lo que lo convierte en la elección ideal para troquelado, costura industrial y aplicaciones de embalaje que demandan precisión y fiabilidad. Además, su composición de polipropileno lo hace ligero, resistente a la humedad y a los agentes ambientales, garantizando un desempeño consistente incluso en condiciones adversas.'
+    ],
+    features: [
+      'Disponible en múltiples colores'
+    ],
+    applications: [
+      '/img/icons/Productos/Reforzado (Small).PNG',
+      '/img/icons/Usos/Amarre (Small).png',
+      '/img/icons/Usos/Costura (Small).PNG',
+      '/img/icons/Usos/Almacenaje (Small).PNG',
+    ],
+    specs: [
+      { label: 'Título', value: '1500 a 2600 den' },
+      { label: 'Resistencia', value: 'Hasta 11 kg' },
+      { label: 'Presentación', value: 'Bobina de 4 a 6 kg' },
+      { label: 'Color', value: 'Múltiples colores disponibles' }
+    ],
+    gallery: [
+      '/img/productos/Hilo Entorcelado pp.webp'
+    ]
+  },
+  'hilo-reforzado-multifilamento': {
+    name: 'Hilo reforzado multifilamento',
+    category: 'Hilos y sogas',
+    cover: '/img/productos/Hilo entorcelado multifilamento.webp',
+    shortDescription: 'Cordones de finos filamentos torsionados para un cierre hermético y resistente.',
+    summary: 'Combina la flexibilidad del multifilamento con un alma reforzada para cargas extremas.',
+    description: [
+      'Nuestro hilo entorcelado multifilamento de polipropileno combina resistencia, flexibilidad y desempeño superior, ofreciendo una solución de alto rendimiento para costura, troquelado y embalaje industrial. Fabricado a partir de múltiples filamentos finos trenzados con precisión, este hilo logra una textura uniforme, gran tenacidad y excelente resistencia al desgaste.',
+      'Gracias a su composición de polipropileno de alta calidad, presenta baja absorción de humedad, alta durabilidad y estabilidad ante factores ambientales, manteniendo un rendimiento constante incluso bajo condiciones exigentes. Su estructura trenzada mejora la adherencia y el control durante el proceso de costura, garantizando terminaciones limpias y firmes.'
+    ],
+    features: [
+      'Disponible en múltiples colores'
+    ],
+    applications: [
+      '/img/icons/Productos/Reforzado (Small).PNG',
+      '/img/icons/Usos/Amarre (Small).png',
+      '/img/icons/Usos/Costura (Small).PNG',
+      '/img/icons/Usos/Almacenaje (Small).PNG',
+    ],
+    specs: [
+      { label: 'Título', value: '1800 a 3200 den' },
+      { label: 'Resistencia', value: 'Hasta 12 kg' },
+      { label: 'Presentación', value: 'Conos de 5 kg' },
+      { label: 'Color', value: 'Múltiples colores disponibles' }
+    ],
+    gallery: [
+      '/img/productos/Hilo entorcelado multifilamento.webp'
+    ]
+  },
+  'amarres': {
+    name: 'Amarres',
+    category: 'Hilos y sogas',
+    cover: '/img/productos/amarres.webp',
+    shortDescription: 'Tela costurada con hilo multifilamento para terminado suave y resistente.',
+    summary: 'Fabricadas en polipropileno de alta densidad para usos variados.',
+    description: [
+      'Tela costurada con hilo multifilamento para un terminado tan suave como resistente para usos variados.'
+    ],
+    features: [
+      'Disponible en diferente configuración de colores'
+    ],
+    applications: [
+      '/img/icons/Productos/Alta resistencia (Small).PNG',
+      '/img/icons/Productos/Reforzado (Small).PNG',
+      '/img/icons/Usos/Costura (Small).PNG',
+      '/img/icons/Usos/Amarre (Small).png',
+      '/img/icons/Usos/Almacenaje (Small).PNG',
+    ],
+    specs: [
+      { label: 'Diámetros', value: '3 a 12 mm' },
+      { label: 'Resistencia', value: '120 a 650 kg' },
+      { label: 'Presentación', value: 'Rollos de 200 o 500 m' },
+      { label: 'Colores', value: 'Natural, negro, azul, rojo' }
+    ],
+    gallery: [
+      '/img/productos/amarres.webp',
+      '/img/productos/slinbag1.webp'
+
+    ]
+  }
+} as const;
+
+type ProductId = keyof typeof PRODUCT_DETAILS;
+type ProductDetail = typeof PRODUCT_DETAILS[ProductId];
+---
+
+<style>
+  /* Scrollbar Hide for Product Nav */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Header Pattern Background */
+  .pattern-bg {
+    background-image: 
+      linear-gradient(135deg, rgba(62, 125, 210, 0.03) 25%, transparent 25%),
+      linear-gradient(225deg, rgba(62, 125, 210, 0.03) 25%, transparent 25%),
+      linear-gradient(45deg, rgba(62, 125, 210, 0.03) 25%, transparent 25%),
+      linear-gradient(315deg, rgba(62, 125, 210, 0.03) 25%, transparent 25%);
+    background-size: 40px 40px;
+    background-position: 0 0, 0 0, 20px 20px, 20px 20px;
+  }
+
+  /* Product Card Hover Effects */
+  .product-card {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(62, 125, 210, 0.1),
+      transparent
+    );
+    transition: left 0.6s ease;
+  }
+
+  .product-card:hover::before {
+    left: 100%;
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px -10px rgba(62, 125, 210, 0.25);
+  }
+
+  /* Image Zoom Effect */
+  .product-img-wrapper {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .product-img-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(62, 125, 210, 0.4), rgba(37, 99, 235, 0.4));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .product-card:hover .product-img-wrapper::after {
+    opacity: 1;
+  }
+
+  .product-img {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .product-card:hover .product-img {
+    transform: scale(1.15);
+  }
+
+  /* Badge Styles */
+  .category-badge {
+    background: linear-gradient(135deg, #3E7DD2, #2563eb);
+    box-shadow: 0 4px 12px rgba(62, 125, 210, 0.3);
+  }
+
+  /* Modal Animations */
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .modal-content {
+    animation: modalFadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Icon Container Styles */
+  .icon-container {
+    background: linear-gradient(135deg, rgba(62, 125, 210, 0.1), rgba(62, 125, 210, 0.05));
+    border: 2px solid rgba(62, 125, 210, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .icon-container:hover {
+    background: linear-gradient(135deg, rgba(62, 125, 210, 0.2), rgba(62, 125, 210, 0.1));
+    border-color: rgba(62, 125, 210, 0.4);
+    transform: scale(1.05);
+  }
+
+  /* Spec Table Styles */
+  .spec-row {
+    transition: all 0.3s ease;
+  }
+
+  .spec-row:hover {
+    background: linear-gradient(90deg, rgba(62, 125, 210, 0.05), transparent);
+    transform: translateX(4px);
+  }
+
+  /* Feature List Styles */
+  .feature-item {
+    position: relative;
+    padding-left: 32px;
+    transition: all 0.3s ease;
+  }
+
+  .feature-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #3E7DD2, #2563eb);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-item::after {
+    content: '✓';
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .feature-item:hover {
+    color: #3E7DD2;
+    padding-left: 36px;
+  }
+
+  /* Scrollbar Styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #3E7DD2, #2563eb);
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #2563eb, #1d4ed8);
+  }
+
+  /* Gallery Grid */
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .gallery-item img {
+    transition: transform 0.5s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  /* Estilos para iconos de aplicaciones */
+  .application-icon-item {
+    transition: transform 0.3s ease;
+  }
+
+  .application-icon-item:hover {
+    transform: scale(1.05);
+  }
+
+  .application-icon-img {
+    transition: transform 0.3s ease;
+  }
+
+  .application-icon-item:hover .application-icon-img {
+    transform: scale(1.05);
+  }
+
+</style>
+
+<Base title={pageTitle}>
+  <Header transparent={false} />
+
+  <!-- Hero Section mejorado -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <!-- Patrón de fondo animado -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+    </div>
+
+    <!-- Círculos decorativos animados - SOLO DESKTOP -->
+    <div class="hidden md:block absolute top-20 -left-20 w-96 h-96 bg-brand-500/20 rounded-full blur-2xl opacity-50 animate-pulse"></div>
+    <div class="hidden md:block absolute bottom-20 -right-20 w-96 h-96 bg-brand-400/20 rounded-full blur-2xl opacity-50 animate-pulse" style="animation-delay: 1s;"></div>
+
+    <div class="relative mx-auto max-w-7xl px-4 py-16 md:py-24 lg:py-32">
+      <div class="text-center">
+        <!-- Badge moderno -->
+        <div class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-brand-500/20 to-sky-500/20 backdrop-blur-xl border border-white/30 px-6 py-3 text-sm text-white shadow-lg">
+          <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-500 shadow-lg shadow-brand-500/50"></span>
+          </span>
+          <span class="font-medium">Catálogo Privado</span>
+        </div>
+
+        <!-- Título principal mejorado -->
+        <h1 class="mt-6 md:mt-8 text-3xl md:text-5xl lg:text-7xl font-black tracking-tight text-white leading-tight">
+          Nuestros
+          <span class="block mt-2 md:mt-3 bg-gradient-to-r from-brand-300 via-brand-400 to-brand-500 bg-clip-text text-transparent drop-shadow-lg">
+            Productos
+          </span>
+        </h1>
+
+        <!-- Descripción mejorada -->
+        <p class="mt-6 md:mt-8 text-base md:text-xl lg:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
+          Soluciones especializadas en <strong class="font-semibold text-brand-300">polipropileno</strong> para industrias exigentes
+        </p>
+
+        <!-- Botones mejorados -->
+        <div class="mt-12 flex flex-wrap justify-center gap-5">
+          <a href="#productos"
+             class="group relative inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-brand-600 to-brand-700 px-10 py-5 text-white font-semibold hover:from-brand-700 hover:to-brand-800 transition-all hover:scale-105 shadow-2xl shadow-brand-500/30 overflow-hidden">
+            <span class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></span>
+            <span class="relative">Ver Catálogo</span>
+            <svg class="relative w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </a>
+          <a href="/contacto"
+             class="inline-flex items-center gap-3 rounded-2xl border-2 border-white/40 bg-white/10 backdrop-blur-xl px-10 py-5 text-white font-semibold hover:bg-white/20 hover:border-white/60 transition-all hover:scale-105 shadow-xl">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            Contáctanos
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wave divisor mejorado -->
+    <div class="absolute bottom-0 left-0 right-0">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+        <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53.3 600 46.7 720 43.3C840 40 960 40 1080 43.3C1200 46.7 1320 53.3 1380 56.7L1440 60V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="white" fill-opacity="0.1"/>
+        <path d="M0 40L60 46.7C120 53.3 240 66.7 360 70C480 73.3 600 66.7 720 63.3C840 60 960 60 1080 63.3C1200 66.7 1320 73.3 1380 76.7L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V40Z" fill="white"/>
+      </svg>
+    </div>
+  </section>
+
+  <main id="productos" class="mx-auto max-w-7xl px-4 sm:px-6 pb-12 pt-28 md:pt-32">
+    <nav class="sticky top-20 md:top-24 z-20 mb-12 -mx-4 sm:mx-0" data-nav-wrapper>
+      <div class="sm:rounded-2xl border-y sm:border border-slate-200 bg-white/95 shadow-sm backdrop-blur-sm overflow-x-auto scrollbar-hide">
+        <ul class="flex flex-nowrap items-center justify-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-3 text-[11px] sm:text-sm font-semibold uppercase text-brand-700">
+          {PRODUCT_NAV.map((item) => (
+            <li data-nav-item={item.id} class="flex-shrink-0">
+              <a
+              href={`#${item.id}`}
+              class="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-brand-200 bg-white px-2.5 sm:px-5 py-1.5 sm:py-2.5 shadow-sm transition-all whitespace-nowrap hover:border-brand-400 hover:bg-brand-50 hover:text-brand-700 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+              >
+              <span class="h-1.5 w-1.5 sm:h-3 sm:w-3 rounded-full bg-brand-500"></span>
+              {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+    {CATALOG.map((group, groupIndex) => {
+      const sectionId = PRODUCT_NAV[groupIndex]?.id ?? slugify(group.cat);
+      return (
+      <section id={sectionId} data-product-group={sectionId} class="mb-16 scroll-mt-48">
+        <!-- Category Header -->
+        <div class="mb-8">
+          <h2 class="text-3xl font-black uppercase tracking-tight text-slate-900 mb-3">
+            {group.cat}
+          </h2>
+          <p class="text-slate-600">Productos especializados de alta calidad</p>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {group.items.map((p) => {
+            const detail = PRODUCT_DETAILS[p.id as ProductId];
+            const applicationIcons: string[] = Array.isArray(detail.applications) ? [...detail.applications] : [];
+            return (
+              <article 
+                data-product-id={p.id} 
+                class="product-card flex flex-col rounded-2xl border-2 border-slate-200 bg-white shadow-lg"
+              >
+                {/* Image Section */}
+                <div class="product-img-wrapper aspect-[4/3] w-full rounded-t-2xl bg-gradient-to-br from-slate-100 to-slate-50 relative overflow-hidden">
+                  <img 
+                    src={p.img} 
+                    alt={p.name} 
+                    class="product-img h-full w-full object-cover rounded-t-2xl" 
+                    loading="lazy" 
+                  />
+                  <div class="absolute top-3 right-3">
+                    <span class="category-badge inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white">
+                      <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                      </svg>
+                      {group.cat}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content Section */}
+                <div class="flex flex-1 flex-col p-4 sm:p-6">
+                  <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-3 leading-tight">
+                    {p.name}
+                  </h3>
+                  
+                  {detail?.shortDescription && (
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed flex-1">
+                      {detail.shortDescription}
+                    </p>
+                  )}
+
+                  {/* Key Specs Preview */}
+                  {detail?.specs && detail.specs.length > 0 && (
+                    <div class="mb-4 space-y-2">
+                      {detail.specs.slice(0, 2).map((spec) => (
+                        <div class="flex items-start gap-2 text-xs">
+                          <svg class="w-4 h-4 text-brand-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                          </svg>
+                          <div>
+                            <span class="font-semibold text-slate-700">{spec.label}:</span>
+                            <span class="text-slate-600 ml-1">{spec.value}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Action Button */}
+                  <button
+                    type="button"
+                    data-product-modal={p.id}
+                    class="mt-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-700 px-5 py-3 text-sm font-bold uppercase tracking-wide text-white transition-all hover:from-brand-700 hover:to-brand-800 hover:shadow-lg hover:shadow-brand-500/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2"
+                  >
+                    <span>Ver detalles</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    );
+    })}
+  </main>
+
+  <Footer />
+
+  <!-- Modal de Producto -->
+  <div
+    id="productModal"
+    class="fixed inset-0 z-50 hidden items-stretch sm:items-center justify-center p-0 sm:px-4 sm:py-6 bg-white sm:bg-slate-900/80 backdrop-blur-sm min-h-screen sm:min-h-0"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="modal-content relative z-10 w-full min-h-screen sm:h-auto sm:max-h-[95vh] sm:max-w-[95vw] xl:max-w-[1400px] overflow-hidden rounded-none sm:rounded-3xl bg-white shadow-2xl">
+      {/* Modal Header */}
+      <div class="flex items-center justify-between border-b-2 border-brand-500 bg-gradient-to-r from-brand-600 to-brand-700 px-4 sm:px-6 py-3 sm:py-4">
+        <div class="flex items-center gap-2 sm:gap-3">
+          <div class="rounded-xl bg-white/20 p-1.5 sm:p-2">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h2 class="text-sm sm:text-lg font-black uppercase tracking-wide text-white">Detalle del producto</h2>
+        </div>
+        <button
+          type="button"
+          class="rounded-xl bg-white/20 p-2 text-white transition hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-600"
+          data-close
+          aria-label="Cerrar detalle"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      {/* Modal Body */}
+      <div id="productModalBody" class="custom-scrollbar h-[calc(100vh-56px)] sm:max-h-[calc(90vh-80px)] overflow-y-auto bg-slate-50 p-2 sm:p-6"></div>
+    </div>
+  </div>
+
+  {/* Templates para los detalles de productos */}
+  <div id="product-detail-templates" class="hidden" aria-hidden="true">
+    {Object.entries(PRODUCT_DETAILS).map(([id, product]) => {
+      const allIcons: string[] = Array.isArray(product.applications) ? [...product.applications] : [];
+      const applicationIcons: string[] = allIcons.filter(icon => icon.includes('/Productos/'));
+      const usageIcons: string[] = allIcons.filter(icon => icon.includes('/Usos/'));
+      return (
+        <template id={`product-detail-${id}`}>
+        <article class="space-y-4 sm:space-y-6">
+          {/* Hero Card */}
+          <div class="overflow-hidden rounded-xl sm:rounded-2xl border-2 border-brand-200 bg-white shadow-xl">
+            <div class="grid gap-0 lg:grid-cols-[2fr_3fr]">
+              {/* Image Section */}
+              <div class="relative bg-gradient-to-br from-brand-900 via-slate-900 to-brand-800 p-4 sm:p-8">
+                <div class="aspect-square w-full overflow-hidden rounded-2xl bg-white shadow-2xl">
+                  <img
+                    src={product.cover}
+                    alt={`Imagen principal de ${product.name}`}
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Info Section */}
+              <div class="relative bg-white p-4 sm:p-8">
+                <div class="mb-4 sm:mb-6">
+                  <span class="inline-flex items-center gap-2 rounded-full bg-brand-100 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-brand-700">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                    </svg>
+                    {product.category}
+                  </span>
+                </div>
+
+                <h3 class="text-xl sm:text-3xl font-black uppercase text-slate-900 mb-3 sm:mb-4 tracking-tight">
+                  {product.name}
+                </h3>
+
+                <p class="text-sm sm:text-base text-slate-700 leading-relaxed mb-4 sm:mb-6">
+                  {product.summary}
+                </p>
+
+                {/* Quick Specs */}
+                <div class="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2">
+                  {product.specs.slice(0, 4).map((spec) => (
+                    <div class="rounded-xl border-2 border-slate-200 bg-slate-50 p-3">
+                      <dt class="text-xs font-bold uppercase tracking-wide text-slate-500 mb-1">{spec.label}</dt>
+                      <dd class="text-sm font-bold text-brand-700">{spec.value}</dd>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Description */}
+          <div class="rounded-xl sm:rounded-2xl border-2 border-slate-200 bg-white p-4 sm:p-6 shadow-lg">
+            <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b-2 border-brand-500">
+              <div class="icon-container rounded-lg sm:rounded-xl p-1.5 sm:p-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+              <h4 class="text-base sm:text-lg md:text-xl font-black uppercase tracking-tight text-slate-900">Descripción</h4>
+            </div>
+            <div class="space-y-2 sm:space-y-3 text-xs sm:text-sm leading-relaxed text-slate-700">
+              {product.description.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+
+          {/* Features - Ancho completo */}
+          <div class="rounded-xl sm:rounded-2xl border-2 border-slate-200 bg-white p-4 sm:p-6 shadow-lg">
+            <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b-2 border-brand-500">
+              <div class="icon-container rounded-lg sm:rounded-xl p-1.5 sm:p-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <h4 class="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900">Características del Producto</h4>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+              {product.features.map((feature) => (
+                <div class="flex items-center gap-2 sm:gap-3 bg-brand-50 border border-brand-200 rounded-lg px-3 sm:px-4 py-2 sm:py-3">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6 text-brand-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                  <span class="text-xs sm:text-sm font-medium text-slate-700 leading-tight">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Propiedades e Industrias - Grid de 2 columnas */}
+          <div class="grid gap-4 sm:gap-6 lg:grid-cols-2">
+
+            {/* Propiedades - Iconos de Productos */}
+            {applicationIcons.length > 0 && (
+              <div class="rounded-xl sm:rounded-2xl border-2 border-slate-200 bg-white p-4 sm:p-6 shadow-lg">
+                <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b-2 border-brand-500">
+                  <div class="icon-container rounded-lg sm:rounded-xl p-1.5 sm:p-2">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                  </div>
+                  <h4 class="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900">Propiedades</h4>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                  {applicationIcons.map((iconSrc: string, index: number) => {
+                    if (!iconSrc) return null;
+                    const iconName = iconSrc.split('/').pop()?.replace(/\.(png|PNG|jpg|JPG|webp|svg)$/i, '').replace(/\s*\(Small\)/i, '') || `Propiedad ${index + 1}`;
+                    return (
+                      <div class="flex items-center gap-2 sm:gap-3 bg-brand-50 border border-brand-200 rounded-lg px-3 sm:px-4 py-2 sm:py-3">
+                        <img
+                          src={iconSrc}
+                          alt={iconName}
+                          class="w-6 h-6 sm:w-8 sm:h-8 object-contain flex-shrink-0"
+                          loading="lazy"
+                        />
+                        <span class="text-xs sm:text-sm font-medium text-slate-700 leading-tight">{iconName}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Industrias - Iconos de Usos */}
+            {usageIcons.length > 0 && (
+              <div class="rounded-xl sm:rounded-2xl border-2 border-slate-200 bg-white p-4 sm:p-6 shadow-lg">
+                <div class="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b-2 border-brand-500">
+                  <div class="icon-container rounded-lg sm:rounded-xl p-1.5 sm:p-2">
+                    <svg class="w-4 h-4 sm:w-5 sm:h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                  </div>
+                  <h4 class="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900">Industrias</h4>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+                  {usageIcons.map((iconSrc: string, index: number) => {
+                    if (!iconSrc) return null;
+                    const iconName = iconSrc.split('/').pop()?.replace(/\.(png|PNG|jpg|JPG|webp|svg)$/i, '').replace(/\s*\(Small\)/i, '') || `Industria ${index + 1}`;
+                    return (
+                      <div class="flex items-center gap-2 sm:gap-3 bg-sky-50 border border-sky-200 rounded-lg px-3 sm:px-4 py-2 sm:py-3">
+                        <img
+                          src={iconSrc}
+                          alt={iconName}
+                          class="w-6 h-6 sm:w-8 sm:h-8 object-contain flex-shrink-0"
+                          loading="lazy"
+                        />
+                        <span class="text-xs sm:text-sm font-medium text-slate-700 leading-tight">{iconName}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Technical Specs Table */}
+          <div class="rounded-xl sm:rounded-2xl border-2 border-slate-200 bg-white shadow-lg overflow-hidden">
+            <div class="flex items-center gap-2 sm:gap-3 bg-slate-900 text-white px-4 sm:px-6 py-3 sm:py-4">
+              <div class="rounded-lg sm:rounded-xl bg-white/20 p-1.5 sm:p-2">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                </svg>
+              </div>
+              <h4 class="text-base sm:text-lg font-black uppercase tracking-tight">Especificaciones Técnicas</h4>
+            </div>
+            <div class="divide-y divide-slate-200">
+              {product.specs.map((spec, index) => (
+                <div class="spec-row grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-brand-50/50">
+                  <dt class="font-bold text-slate-700 flex items-center gap-2 text-xs sm:text-sm">
+                    <span class="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-xs font-bold">
+                      {index + 1}
+                    </span>
+                    {spec.label}
+                  </dt>
+                  <dd class="text-slate-900 font-semibold text-xs sm:text-sm ml-7 sm:ml-0">{spec.value}</dd>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Gallery / Fichas */}
+          {product.gallery.length > 0 && (
+            <div class="rounded-xl sm:rounded-2xl border-2 border-slate-200 bg-white p-4 sm:p-6 shadow-lg">
+              <div class="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 pb-3 sm:pb-4 border-b-2 border-brand-500">
+                <div class="icon-container rounded-lg sm:rounded-xl p-1.5 sm:p-2">
+                  <svg class="w-4 h-4 sm:w-5 sm:h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <h4 class="text-base sm:text-lg font-black uppercase tracking-tight text-slate-900">
+                  {product.gallery.length === 7 && product.gallery[0].includes('bigbagdiagram') ? 'Fichas' : 'Galería'}
+                </h4>
+              </div>
+              {/* Grid especial para fichas de Big Bag (7 imágenes) */}
+              {product.gallery.length === 7 && product.gallery[0].includes('bigbagdiagram') ? (
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {product.gallery.map((image, index) => (
+                    <div class="bg-slate-50 rounded-xl overflow-hidden border border-slate-200 hover:border-brand-400 transition-colors p-6 shadow-sm">
+                      <img
+                        src={image}
+                        alt={`${product.name} ficha ${index + 1}`}
+                        class="w-full h-auto object-contain min-h-[180px]"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div class="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                  {product.gallery.map((image, index) => (
+                    <div class="gallery-item aspect-video bg-slate-100 shadow-md rounded-lg overflow-hidden">
+                      <img
+                        src={image}
+                        alt={`${product.name} imagen ${index + 1}`}
+                        class="h-full w-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </article>
+        </template>
+      );
+    })}
+  </div>
+
+  <script type="module">
+    // TODO(claude): subcarpeta / para importaciones
+    import { isPrivateEnabled, getGrantProducts, disablePrivate, checkAccessValid } from '/lib/privado.js';
+
+    (function(){
+      // 1) Bloquea si no hay acceso privado
+      try {
+        if (!isPrivateEnabled()) {
+          location.replace('/');
+          return;
+        }
+      }
+      catch (e) {
+        location.replace('/');
+        return;
+      }
+
+      // 2) Recupera lista de productos
+      let allowIds = [];
+      try {
+        allowIds = getGrantProducts();
+        if (!Array.isArray(allowIds) || !allowIds.length) {
+          const u = new URL(location.href);
+          const p = u.searchParams.get('p');
+          if (p) {
+            allowIds = p.split(',').map(s => s.trim()).filter(Boolean);
+          }
+        }
+      } catch {}
+
+      // 3) Aplicar filtro inicial
+      const cards = Array.from(document.querySelectorAll('[data-product-id]'));
+      const cardMap = new Map();
+      cards.forEach((card) => {
+        if (!(card instanceof HTMLElement)) return;
+        const id = card.getAttribute('data-product-id');
+        if (id) cardMap.set(id, card);
+      });
+      const groupSections = Array.from(document.querySelectorAll('[data-product-group]'));
+      const navItems = Array.from(document.querySelectorAll('[data-nav-item]'));
+      const navWrapper = document.querySelector('[data-nav-wrapper]');
+      const modal = document.getElementById('productModal');
+      const modalBody = document.getElementById('productModalBody');
+      const templatesRoot = document.getElementById('product-detail-templates');
+      const templateCache = new Map();
+
+      if (templatesRoot) {
+        templatesRoot.querySelectorAll('template[id^="product-detail-"]').forEach((template) => {
+          if (!(template instanceof HTMLTemplateElement)) return;
+          const tplId = template.id.replace('product-detail-', '');
+          templateCache.set(tplId, template.innerHTML);
+        });
+        templatesRoot.remove();
+      }
+
+      const hideElement = (el) => {
+        if (!(el instanceof HTMLElement)) return;
+        el.classList.add('hidden');
+        el.style.display = 'none';
+        el.hidden = true;
+      };
+
+      const showElement = (el) => {
+        if (!(el instanceof HTMLElement)) return;
+        el.classList.remove('hidden');
+        el.style.display = '';
+        el.hidden = false;
+      };
+
+      function applyFilter() {
+        // Si no hay filtros específicos, mostrar todos los productos
+        if (!Array.isArray(allowIds) || allowIds.length === 0) {
+          cards.forEach(showElement);
+          groupSections.forEach(showElement);
+          navItems.forEach(showElement);
+          if (navWrapper instanceof HTMLElement) {
+            showElement(navWrapper);
+            navWrapper.setAttribute('aria-hidden', 'false');
+          }
+          return;
+        }
+
+        const allow = new Set(allowIds);
+        let anyCardVisible = false;
+        
+        cards.forEach(el => {
+          if (!(el instanceof HTMLElement)) return;
+          const id = el.getAttribute('data-product-id') || '';
+          if (!allow.has(id)) {
+            hideElement(el);
+          } else {
+            showElement(el);
+            anyCardVisible = true;
+          }
+        });
+
+        let visibleGroups = 0;
+        groupSections.forEach(section => {
+          if (!(section instanceof HTMLElement)) return;
+          const hasVisible = Array
+            .from(section.querySelectorAll('[data-product-id]'))
+            .some(card => card instanceof HTMLElement && !card.hidden && card.style.display !== 'none');
+          if (hasVisible) {
+            showElement(section);
+            visibleGroups++;
+          } else {
+            hideElement(section);
+          }
+        });
+
+        let visibleNavItems = 0;
+        navItems.forEach(item => {
+          if (!(item instanceof HTMLElement)) return;
+          const target = item.getAttribute('data-nav-item') || '';
+          const section = target ? document.querySelector(`[data-product-group="${target}"]`) : null;
+          const sectionVisible = section instanceof HTMLElement && !section.hidden && section.style.display !== 'none';
+          if (sectionVisible) {
+            showElement(item);
+            visibleNavItems++;
+          } else {
+            hideElement(item);
+          }
+        });
+
+        if (navWrapper instanceof HTMLElement) {
+          if (visibleNavItems === 0 || !anyCardVisible) {
+            hideElement(navWrapper);
+            navWrapper.setAttribute('aria-hidden', 'true');
+          } else {
+            showElement(navWrapper);
+            navWrapper.setAttribute('aria-hidden', 'false');
+          }
+        }
+      }
+
+      applyFilter();
+
+      function closeProductModal() {
+        if (!modal || !modalBody) return;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modalBody.innerHTML = '';
+        modal.removeAttribute('data-open');
+        if (document.body) document.body.classList.remove('overflow-hidden');
+      }
+
+      function openProductModal(productId) {
+        if (!modal || !modalBody) {
+          return;
+        }
+        
+        const card = cardMap.get(productId);
+        if (card && (card.classList.contains('hidden') || card.style.display === 'none')) {
+          return;
+        }
+
+        const templateHtml = templateCache.get(productId);
+        if (!templateHtml || !modalBody) {
+          return;
+        }
+
+        modalBody.innerHTML = '';
+        modalBody.insertAdjacentHTML('afterbegin', templateHtml);
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        modal.setAttribute('data-open', productId);
+        modalBody.scrollTop = 0;
+        if (document.body) document.body.classList.add('overflow-hidden');
+        
+      }
+
+      document.addEventListener('click', (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest('[data-product-modal]') : null;
+        if (trigger) {
+          event.preventDefault();
+          const productId = trigger.getAttribute('data-product-modal');
+          if (productId) openProductModal(productId);
+          return;
+        }
+
+        if (!modal || modal.classList.contains('hidden')) return;
+        const closer = event.target instanceof Element ? event.target.closest('#productModal [data-close]') : null;
+        if (closer) {
+          event.preventDefault();
+          closeProductModal();
+        }
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+          closeProductModal();
+        }
+      });
+
+      // 4) Verificar periódicamente si el acceso sigue válido
+      async function verifyAccess() {
+        try {
+          const isValid = await checkAccessValid();
+
+          if (!isValid) {
+            disablePrivate();
+            window.location.href = '/';
+          }
+        } catch (e) {
+          console.error('Error verificando acceso:', e);
+        }
+      }
+
+      // Verificar cada 10 segundos (más frecuente en productos)
+      setInterval(verifyAccess, 10000);
+
+      // Primera verificación inmediata después de 2 segundos
+      setTimeout(verifyAccess, 2000);
+      
+    })();
+  </script>
+</Base>
+

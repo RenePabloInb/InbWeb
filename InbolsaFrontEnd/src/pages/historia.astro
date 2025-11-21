@@ -1,0 +1,565 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const milestones = [
+  {
+    year: '1974',
+    title: 'Inicio',
+    description: 'Inauguramos la primera planta en El Alto, La Paz, Bolivia. Nuestro fundador el Sr. Hugo Ochiay visionario empresario Boliviano Japones establece Inbolsa LTDA como referente de tejidos en Sudamérica y prueba del potencial de la industria boliviana.',
+    imageLeft: '/img/story1.jpg',
+    imageRight: '/img/landing20.jpg',
+    icon: '/banderas.webp',
+    gallery: [
+      '/img/story1.jpg',
+      '/img/story8.jpg',
+      '/img/story9.jpg',
+      '/img/story10.jpg'
+    ]
+  },
+  {
+    year: '2000',
+    title: 'Modernización de maquinaria',
+    description: 'El inicio del nuevo milenio marcó un cambio radical: expandimos producción incorporando maquinaria de punta para garantizar excelencia en cada paso del proceso industrial.',
+    imageLeft: '/img/colors/70.webp',
+    imageRight: '/img/landing18.jpg'
+  },
+  
+  {
+    year: '2012',
+    title: 'Planta Big Bag',
+    description: 'Inauguracion de la planta especializada en la produccion de envases tipo Big Bag, elevando la personalización y dedicación con cada cliente que confía su logística en nosotros.',
+    imageLeft: '/img/story2.webp',
+    imageRight: '/img/landing14.jpg'
+  },
+  {
+    year: '2017',
+    title: 'Certificación OEA - Exportador',
+    description: 'Somos la primera empresa en Bolivia certificada por la Aduana Nacional como Operador Económico Autorizado, cumpliendo estándares de seguridad y confiabilidad ejemplares en la cadena de logistica.',
+    imageLeft: '/img/story3.JPG',
+    imageRight: '/img/landing13.jpg',
+    icon: '/logooea.webp'
+  },
+  {
+    year: '2020',
+    title: 'Adaptamos nuestras lineas productivas',
+    description: 'Como parte integral de nuestro alto compromiso con la responsabilidad social, incorporamos a nuestra línea productiva la elaboración de trajes y accesorios de bioseguridad, que fueron donados en su integridad a centros hospitalarios, policía, fuerzas armadas, gobernaciones y alcaldías.',
+    imageLeft: '/img/story5.jpg',
+    imageRight: '/img/landing25.jpg'
+  },
+  {
+    year: '2022',
+    title: 'Certificacion Operador económico autorizado OEA – Importador',
+    description: 'Somos la primera empresa en Bolivia acreditada por la aduana nacional como operador económico autorizado con la doble certificación de importador y exportador, lo que nos reconoce  como altamente confiables en la administración de la cadena logística internacional de la cadena logística del comercio exterior.',
+    imageLeft: '/logooea.webp',
+    imageRight: '/img/landing26.jpg',
+    isLogo: true
+  },
+  {
+    year: '2024',
+    title: 'Planta Warnes',
+    description: 'Estrenamos nuestra planta en Warnes, Santa Cruz de la Sierra con una planta productiva de ultima generación',
+    imageLeft: '/img/story7.webp',
+    imageRight: '/img/landing26.jpg'
+  }
+];
+---
+
+<style>
+  .timeline-slider {
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+  .timeline-slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .timeline-dot {
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .timeline-dot.active {
+    background-color: #3E7DD2;
+    transform: scale(1.4);
+    box-shadow: 0 0 0 4px rgba(62, 125, 210, 0.2);
+  }
+
+  .timeline-year-btn {
+    transition: all 0.3s ease;
+  }
+
+  .timeline-year-btn:hover .timeline-dot {
+    background-color: #3E7DD2;
+    transform: scale(1.2);
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .slide-content {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .slide-img-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+  }
+
+  .slide-img-right {
+    animation: slideInRight 0.8s ease-out forwards;
+  }
+
+  .glow-border {
+    box-shadow: 0 0 20px rgba(62, 125, 210, 0.4);
+  }
+</style>
+
+<Base title="Historia — Inbolsa">
+  <Header />
+
+  <main class="bg-slate-900">
+    <!-- Hero Section -->
+    <section class="pt-24 md:pt-32 pb-12 md:pb-16 text-center text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+      </div>
+
+      <div class="hidden md:block absolute top-20 -left-20 w-96 h-96 bg-brand-500/20 rounded-full blur-2xl opacity-50 animate-pulse"></div>
+      <div class="hidden md:block absolute bottom-20 -right-20 w-96 h-96 bg-brand-400/20 rounded-full blur-2xl opacity-50 animate-pulse" style="animation-delay: 1s;"></div>
+
+      <div class="mx-auto max-w-7xl px-4 relative z-10">
+        <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 text-sm text-white/90 mb-4">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+          </svg>
+          Nuestra trayectoria
+        </span>
+        
+        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+          50 años de
+          <span class="block mt-2 bg-gradient-to-r from-brand-300 via-brand-400 to-brand-500 bg-clip-text text-transparent">
+            Historia y Excelencia
+          </span>
+        </h1>
+
+        <p class="text-base md:text-xl text-slate-300 max-w-3xl mx-auto">
+          Más de cinco décadas tejiendo calidad superior y construyendo relaciones duraderas.
+        </p>
+      </div>
+    </section>
+
+    <!-- Timeline Slider Section -->
+    <section class="pb-12 md:pb-20">
+      <div class="mx-auto max-w-[1600px] px-4">
+        <!-- Contenedor del slide actual -->
+        <div id="timeline-slider" class="relative">
+          <!-- Slide Container con border glow -->
+          <div class="bg-slate-800 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl glow-border">
+            <div class="grid md:grid-cols-2 gap-0 items-stretch h-[400px] md:h-[500px]">
+              <!-- Imagen Izquierda con carrusel opcional -->
+              <div class="h-[400px] md:h-[500px] slide-img-left relative overflow-hidden">
+                <!-- Imagen principal -->
+                <img
+                  id="slide-img-left"
+                  src={milestones[0].imageLeft}
+                  alt="Historia"
+                  class="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority="high"
+                />
+
+                <!-- Carrusel de galería (solo para 1974) -->
+                <div id="gallery-container" class="hidden absolute inset-0 bg-slate-900">
+                  <div class="relative h-full">
+                    <img
+                      id="gallery-img"
+                      src=""
+                      alt="Galería histórica"
+                      class="w-full h-full object-cover"
+                    />
+
+                    <!-- Controles del carrusel -->
+                    <div class="absolute bottom-4 left-0 right-0 flex items-center justify-center gap-3">
+                      <button
+                        id="gallery-prev"
+                        class="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all"
+                        aria-label="Anterior imagen"
+                      >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                      </button>
+
+                      <!-- Indicadores de puntos -->
+                      <div id="gallery-dots" class="flex gap-2"></div>
+
+                      <button
+                        id="gallery-next"
+                        class="p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-all"
+                        aria-label="Siguiente imagen"
+                      >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contenido Central -->
+              <div class="relative px-6 md:px-12 lg:px-16 py-8 md:py-12 text-white slide-content h-[400px] md:h-[500px] overflow-y-auto">
+                <!-- Año grande con efecto -->
+                <div class="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                  <h2 id="slide-year" class="text-4xl md:text-6xl lg:text-8xl font-bold text-brand-400 transition-all duration-500">
+                    {milestones[0].year}
+                  </h2>
+                  <img
+                    id="slide-icon"
+                    src={milestones[0].icon || ''}
+                    alt="Icono"
+                    class={`h-12 md:h-16 lg:h-20 w-auto object-contain transition-all duration-500 ${milestones[0].icon ? '' : 'hidden'}`}
+                  />
+                </div>
+
+                <!-- Título -->
+                <h3 id="slide-title" class="text-xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4 transition-all duration-500">
+                  {milestones[0].title}
+                </h3>
+
+                <!-- Descripción -->
+                <p id="slide-description" class="text-sm md:text-base lg:text-lg text-slate-300 leading-relaxed transition-all duration-500">
+                  {milestones[0].description}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controles de navegación mejorados -->
+          <div class="flex justify-between items-center mt-8">
+            <button 
+              id="prev-btn"
+              class="group p-4 rounded-full bg-brand-600 text-white hover:bg-brand-700 transition-all disabled:opacity-30 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-110 active:scale-95"
+              aria-label="Anterior"
+            >
+              <svg class="w-6 h-6 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+
+            <div class="flex items-center gap-4 text-white">
+              <span id="current-slide" class="text-2xl font-bold text-brand-400">1</span>
+              <span class="text-slate-500">/</span>
+              <span class="text-slate-400">{milestones.length}</span>
+            </div>
+
+            <button 
+              id="next-btn"
+              class="group p-4 rounded-full bg-brand-600 text-white hover:bg-brand-700 transition-all shadow-lg hover:shadow-xl hover:scale-110 active:scale-95"
+              aria-label="Siguiente"
+            >
+              <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Timeline Navigation mejorada -->
+        <div class="mt-12">
+          <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+              {milestones.map((milestone, index) => (
+                <button 
+                  class="timeline-year-btn group flex flex-col items-center text-center gap-3"
+                  data-index={index}
+                >
+                  <span class="text-white text-base font-bold opacity-50 group-hover:opacity-100 transition-all">
+                    {milestone.year}
+                  </span>
+                  <div class="timeline-dot w-3.5 h-3.5 rounded-full bg-slate-500 group-hover:bg-brand-500 relative">
+                    <div class="absolute inset-0 rounded-full bg-brand-400 opacity-0 group-hover:opacity-50 blur-md"></div>
+                  </div>
+                  <div class="text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-all max-w-[140px]">
+                    {milestone.title}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section con animación -->
+    <section class="bg-slate-800 py-12 md:py-16 lg:py-20 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+      </div>
+
+      <div class="mx-auto max-w-4xl px-4 text-center text-white relative z-10">
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
+          Construyendo el futuro juntos
+        </h2>
+        <p class="text-base md:text-lg text-slate-300 mb-6 md:mb-8">
+          Conoce más sobre nuestros valores y compromisos que nos han guiado durante 50 años.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/valores" class="group inline-flex items-center gap-2 px-8 py-3 bg-brand-600 text-white rounded-xl font-semibold hover:bg-brand-700 transition-all shadow-lg hover:scale-105">
+            <span>Nuestros Valores</span>
+            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+          <a href="/contacto" class="px-8 py-3 border-2 border-slate-600 text-white rounded-xl font-semibold hover:border-brand-600 hover:bg-slate-700 transition-all">
+            Contáctanos
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script define:vars={{ milestones }}>
+    let currentIndex = 0;
+    const totalSlides = milestones.length;
+
+    const slideImgLeft = document.getElementById('slide-img-left');
+    const slideYear = document.getElementById('slide-year');
+    const slideTitle = document.getElementById('slide-title');
+    const slideDescription = document.getElementById('slide-description');
+    const slideIcon = document.getElementById('slide-icon');
+    const currentSlideSpan = document.getElementById('current-slide');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const dots = document.querySelectorAll('.timeline-dot');
+    const yearButtons = document.querySelectorAll('.timeline-year-btn');
+
+    // Elementos del carrusel de galería
+    const galleryContainer = document.getElementById('gallery-container');
+    const galleryImg = document.getElementById('gallery-img');
+    const galleryPrev = document.getElementById('gallery-prev');
+    const galleryNext = document.getElementById('gallery-next');
+    const galleryDotsContainer = document.getElementById('gallery-dots');
+
+    let currentGalleryIndex = 0;
+    let currentGallery = [];
+
+    // Prefetch de imágenes para transiciones rápidas
+    function prefetchImage(src) {
+      const img = new Image();
+      img.src = src;
+    }
+
+    function updateGallery(index) {
+      if (!currentGallery || currentGallery.length === 0) return;
+
+      galleryImg.src = currentGallery[index];
+
+      // Actualizar dots
+      const dots = galleryDotsContainer.querySelectorAll('.gallery-dot');
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add('bg-brand-400');
+          dot.classList.remove('bg-gray-400');
+        } else {
+          dot.classList.remove('bg-brand-400');
+          dot.classList.add('bg-gray-400');
+        }
+      });
+
+      currentGalleryIndex = index;
+
+      // Prefetch siguiente imagen
+      const nextIndex = (index + 1) % currentGallery.length;
+      prefetchImage(currentGallery[nextIndex]);
+    }
+
+    function initGallery(gallery) {
+      if (!gallery || gallery.length === 0) {
+        galleryContainer.classList.add('hidden');
+        slideImgLeft.classList.remove('hidden');
+        return;
+      }
+
+      currentGallery = gallery;
+      currentGalleryIndex = 0;
+
+      // Mostrar galería
+      slideImgLeft.classList.add('hidden');
+      galleryContainer.classList.remove('hidden');
+
+      // Crear dots
+      galleryDotsContainer.innerHTML = '';
+      gallery.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = `gallery-dot w-2 h-2 rounded-full transition-all cursor-pointer ${i === 0 ? 'bg-brand-400' : 'bg-gray-400'}`;
+        dot.addEventListener('click', () => updateGallery(i));
+        galleryDotsContainer.appendChild(dot);
+      });
+
+      // Mostrar primera imagen
+      galleryImg.src = gallery[0];
+      galleryImg.style.transition = 'opacity 0.3s ease';
+    }
+
+    function updateSlide(index) {
+      const milestone = milestones[index];
+
+      // Actualizar contenido directamente (sin fade para mejor performance)
+      slideImgLeft.src = milestone.imageLeft;
+      slideYear.textContent = milestone.year;
+      slideTitle.textContent = milestone.title;
+      slideDescription.textContent = milestone.description;
+      currentSlideSpan.textContent = (index + 1).toString();
+
+      // Manejar logo (isLogo) - centrar con fondo sin cambiar tamaño del contenedor
+      if (milestone.isLogo) {
+        slideImgLeft.style.objectFit = 'contain';
+        slideImgLeft.style.padding = '3rem';
+        slideImgLeft.style.backgroundColor = '#1e293b';
+      } else {
+        slideImgLeft.style.objectFit = 'cover';
+        slideImgLeft.style.padding = '0';
+        slideImgLeft.style.backgroundColor = 'transparent';
+      }
+
+      // Actualizar icono
+      if (milestone.icon) {
+        slideIcon.src = milestone.icon;
+        slideIcon.classList.remove('hidden');
+      } else {
+        slideIcon.classList.add('hidden');
+      }
+
+      // Inicializar galería si existe
+      if (milestone.gallery) {
+        initGallery(milestone.gallery);
+      } else {
+        galleryContainer.classList.add('hidden');
+        slideImgLeft.classList.remove('hidden');
+      }
+
+      // Prefetch siguiente y anterior imagen
+      if (index < totalSlides - 1) {
+        prefetchImage(milestones[index + 1].imageLeft);
+      }
+      if (index > 0) {
+        prefetchImage(milestones[index - 1].imageLeft);
+      }
+
+      // Actualizar dots con animación
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+
+      // Actualizar botones
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === totalSlides - 1;
+
+      currentIndex = index;
+    }
+
+    // Controles de galería
+    galleryPrev.addEventListener('click', () => {
+      const newIndex = currentGalleryIndex > 0 ? currentGalleryIndex - 1 : currentGallery.length - 1;
+      updateGallery(newIndex);
+    });
+
+    galleryNext.addEventListener('click', () => {
+      const newIndex = currentGalleryIndex < currentGallery.length - 1 ? currentGalleryIndex + 1 : 0;
+      updateGallery(newIndex);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        updateSlide(currentIndex - 1);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentIndex < totalSlides - 1) {
+        updateSlide(currentIndex + 1);
+      }
+    });
+
+    yearButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.dataset.index);
+        updateSlide(index);
+      });
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        updateSlide(currentIndex - 1);
+      } else if (e.key === 'ArrowRight' && currentIndex < totalSlides - 1) {
+        updateSlide(currentIndex + 1);
+      }
+    });
+
+    // Auto-play galería (opcional)
+    let galleryInterval;
+    function startGalleryAutoplay() {
+      if (currentGallery && currentGallery.length > 1) {
+        galleryInterval = setInterval(() => {
+          const newIndex = currentGalleryIndex < currentGallery.length - 1 ? currentGalleryIndex + 1 : 0;
+          updateGallery(newIndex);
+        }, 4000);
+      }
+    }
+
+    function stopGalleryAutoplay() {
+      if (galleryInterval) {
+        clearInterval(galleryInterval);
+      }
+    }
+
+    // Iniciar autoplay cuando se muestra galería
+    galleryContainer.addEventListener('mouseenter', stopGalleryAutoplay);
+    galleryContainer.addEventListener('mouseleave', startGalleryAutoplay);
+
+    // Inicializar primer dot
+    updateSlide(0);
+    if (milestones[0].gallery) {
+      startGalleryAutoplay();
+    }
+  </script>
+</Base>

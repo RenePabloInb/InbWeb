@@ -1,0 +1,219 @@
+---
+// TODO(claude): Página privada de acceso restringido por QR
+// /privado — landing privada (sin SSR cookies, sin CORS)
+export const prerender = true;
+
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const PAGE_TITLE = 'Inbolsa — Zona privada';
+---
+<Base title={PAGE_TITLE}>
+  <Header transparent={true} />
+
+  <main>
+    <!-- Video Institucional Hero -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 py-20 md:py-24">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img
+          src="/img/Landing58.JPG"
+          alt="Inbolsa Background"
+          class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-slate-800/85 to-slate-900/90"></div>
+      </div>
+
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-5">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+      </div>
+
+      <!-- Decorative Elements -->
+      <div class="hidden md:block absolute top-20 -left-20 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl"></div>
+      <div class="hidden md:block absolute bottom-20 -right-20 w-96 h-96 bg-sky-500/20 rounded-full blur-3xl"></div>
+
+      <div class="relative z-10 w-full max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-8 md:mb-12">
+          <h1 class="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-4">
+            Bienvenido a <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-sky-400">Inbolsa</span>
+          </h1>
+          <p class="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
+            Conoce nuestra empresa y soluciones de embalaje industrial
+          </p>
+        </div>
+
+        <!-- Video Player Container -->
+        <div class="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
+          <!-- Video Element -->
+          <video
+            id="videoInstitucional"
+            class="w-full aspect-video bg-black"
+            controls
+            preload="metadata"
+            poster="/img/Landing58.JPG"
+          >
+            <source src="/videolanding.mp4" type="video/mp4" />
+            Tu navegador no soporta la reproducción de video.
+          </video>
+
+          <!-- Play Overlay (visible when video is paused) -->
+          <div id="playOverlay" class="absolute inset-0 flex items-center justify-center bg-black/40 cursor-pointer transition-opacity duration-300">
+            <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/90 flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300">
+              <svg class="w-8 h-8 md:w-10 md:h-10 text-brand-600 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center mt-8 md:mt-12">
+          <a
+            href="/productos"
+            class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-brand-500 to-brand-600 text-white font-bold rounded-xl shadow-lg shadow-brand-500/30 hover:shadow-xl hover:shadow-brand-500/40 hover:-translate-y-1 transition-all duration-300"
+          >
+            <span>Ver Catálogo de Productos</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline>
+    // Video player overlay control
+    const video = document.getElementById('videoInstitucional');
+    const overlay = document.getElementById('playOverlay');
+
+    if (video && overlay) {
+      // Click on overlay to play
+      overlay.addEventListener('click', () => {
+        video.play();
+      });
+
+      // Hide overlay when playing
+      video.addEventListener('play', () => {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+      });
+
+      // Show overlay when paused
+      video.addEventListener('pause', () => {
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+      });
+
+      // Hide overlay when ended
+      video.addEventListener('ended', () => {
+        overlay.style.opacity = '1';
+        overlay.style.pointerEvents = 'auto';
+      });
+    }
+  </script>
+
+  <Footer />
+
+  <script type="module">
+    // TODO(claude): respetar subcarpeta / para importaciones
+    import { enablePrivate, setGrantProducts, disablePrivate, checkAccessValid } from '/lib/privado.js';
+    import { api } from '/lib/api.js';
+
+    (async function() {
+      try {
+        // 1. Procesar token si viene en URL
+        const params = new URLSearchParams(location.search);
+        const token = params.get('accessToken');
+        const productsParam = params.get('p');
+        const fromQR = params.get('from') === 'qr';
+
+        console.log("Token:", token ? "Presente" : "No presente");
+        console.log("Productos en URL:", productsParam);
+        console.log("Viene de QR:", fromQR);
+
+        if (token) {
+          // CRÍTICO: Si viene de un QR, LIMPIAR productos viejos primero
+          if (fromQR) {
+            console.log("Viene de QR - Limpiando productos anteriores del localStorage");
+            localStorage.removeItem('inbolsa:qr:products');
+          }
+
+          console.log("Habilitando acceso privado");
+          enablePrivate(120);
+
+          if (productsParam) {
+            const productIds = productsParam.split(',').filter(Boolean);
+            console.log("Guardando productos desde URL:", productIds);
+            setGrantProducts(productIds);
+          } else {
+            try {
+              console.log("Consultando payload del backend");
+              const payload = await api.accessPayload(token);
+              console.log("Payload recibido:", payload);
+
+              if (payload?.qr?.payload) {
+                const p = payload.qr.payload;
+                if (p.section === 'productos') {
+                  if (p.allow === 'include' && Array.isArray(p.products)) {
+                    console.log("Guardando productos del payload:", p.products);
+                    setGrantProducts(p.products);
+                  }
+                }
+              }
+            } catch(error) {
+              console.error('Error al procesar token:', error);
+            }
+          }
+
+          // TODO(claude): respetar subcarpeta / al limpiar history
+          history.replaceState({}, document.title, '/privado');
+        }
+        
+        // 2. Verificar que tengamos acceso privado
+        const isPrivate = localStorage.getItem('inbolsa:qr:ok') === '1' ||
+                         document.cookie.split(';').some(c => c.trim().startsWith('inbolsa:qr:ok=')) ||
+                         document.cookie.split(';').some(c => c.trim().startsWith('qrauth=')) ||
+                         document.cookie.split(';').some(c => c.trim().startsWith('inb_access='));
+        
+        if (!isPrivate) {
+          console.log("No hay acceso privado, redirigiendo...");
+          // TODO(claude): respetar subcarpeta / para redirección
+          location.href = '/';
+          return;
+        }
+        
+        console.log("Acceso privado verificado");
+        
+        // 3. Verificar periódicamente si el acceso sigue válido
+        async function verifyAccess() {
+          try {
+            console.log("Verificando validez del acceso en privado...");
+            const isValid = await checkAccessValid();
+            
+            if (!isValid) {
+              console.log("Acceso revocado, redirigiendo...");
+              disablePrivate();
+              // TODO(claude): respetar subcarpeta / para redirección
+              window.location.href = '/';
+            }
+          } catch (e) {
+            console.error("Error verificando acceso:", e);
+          }
+        }
+
+        // Verificar cada 15 segundos
+        setInterval(verifyAccess, 15000);
+        
+        // Primera verificación después de 3 segundos
+        setTimeout(verifyAccess, 3000);
+        
+      } catch (e) {
+        console.error('Error en inicialización privado:', e);
+      }
+    })();
+  </script>
+</Base>
