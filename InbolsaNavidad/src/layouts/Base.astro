@@ -1,0 +1,398 @@
+---
+
+const { title = 'Inbolsa' } = Astro.props;
+import '../styles/tailwind.css';
+import ChatWidget from '../components/ChatWidget.astro';
+import ChristmasLights from '../components/ChristmasLights.astro';
+import SnowEffect from '../components/SnowEffect.astro';
+---
+<html lang="es" class="h-full scroll-smooth">
+
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Performance optimizations -->
+    <meta name="theme-color" content="#dc2626" />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+
+    <link rel="icon" type="image/png" href="/favicon1.png" />
+    <title>{title}</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-SW9NY8MGLR"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-SW9NY8MGLR');
+    </script>
+
+    <!-- Styles for scroll animations and UI enhancements -->
+    <style is:global>
+      /* Performance optimizations */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Skip to content link for accessibility */
+      .skip-to-content {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: #dc2626;
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        z-index: 10000;
+        border-radius: 0 0 4px 0;
+        font-weight: 600;
+      }
+
+      .skip-to-content:focus {
+        top: 0;
+      }
+
+      /* Improved focus indicators */
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid #dc2626;
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+
+      /* Fade-in animations for scroll - GPU accelerated */
+      .fade-in-section {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+        transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: opacity, transform;
+      }
+
+      .fade-in-section.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        will-change: auto;
+      }
+
+      /* Staggered animations */
+      .fade-in-section.stagger-1 { transition-delay: 0.05s; }
+      .fade-in-section.stagger-2 { transition-delay: 0.1s; }
+      .fade-in-section.stagger-3 { transition-delay: 0.15s; }
+      .fade-in-section.stagger-4 { transition-delay: 0.2s; }
+
+      /* Scroll progress indicator */
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #dc2626, #ef4444);
+        z-index: 9999;
+        transform-origin: left;
+        transform: scaleX(0);
+        will-change: transform;
+      }
+
+      /* Skeleton loading animation - optimized */
+      .skeleton {
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.2s ease-in-out infinite;
+      }
+
+      @keyframes skeleton-loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+
+      /* Image loading state with blur-up effect */
+      .img-loading {
+        position: relative;
+        overflow: hidden;
+        background: #f1f5f9;
+      }
+
+      .img-loading::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.2s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      .img-loading img {
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+        will-change: opacity;
+      }
+
+      .img-loading.loaded::before {
+        display: none;
+      }
+
+      .img-loading.loaded img {
+        opacity: 1;
+        will-change: auto;
+      }
+
+      /* Ripple effect for buttons */
+      .ripple {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ripple::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+      }
+
+      .ripple:active::after {
+        width: 300px;
+        height: 300px;
+      }
+
+      /* Micro-interactions for cards */
+      .card-hover {
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        will-change: transform;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-4px) scale(1.01);
+        will-change: auto;
+      }
+
+      /* Gradient animation */
+      .gradient-animate {
+        background-size: 200% 200%;
+        animation: gradient-shift 8s ease infinite;
+      }
+
+      @keyframes gradient-shift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      /* Prefers reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Improve text rendering */
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
+
+      /* Content visibility for performance */
+      .content-auto {
+        content-visibility: auto;
+        contain-intrinsic-size: 500px;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-dvh bg-slate-50 text-slate-800 antialiased">
+    <!-- Skip to content for accessibility -->
+    <a href="#main-content" class="skip-to-content">Saltar al contenido</a>
+
+    <!-- Scroll progress indicator -->
+    <!-- Christmas effects -->
+    <ChristmasLights />
+    <SnowEffect />
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <main id="main-content" class="min-h-dvh">
+      <slot />
+    </main>
+
+    <ChatWidget />
+
+    <!-- Global UX enhancement scripts -->
+    <script is:inline>
+      (function() {
+        // Performance optimization: use passive listeners and RAF
+        const scrollProgress = document.getElementById('scrollProgress');
+        let ticking = false;
+
+        // Optimized scroll progress with caching
+        function updateScrollProgress() {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const scrollPercent = docHeight > 0 ? scrollTop / docHeight : 0;
+          if (scrollProgress) {
+            scrollProgress.style.transform = 'scaleX(' + scrollPercent + ')';
+          }
+        }
+
+        // Optimized Intersection Observer for fade-in sections
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+
+        if (fadeInSections.length > 0 && 'IntersectionObserver' in window) {
+          const observerOptions = {
+            threshold: 0.05,
+            rootMargin: '0px 0px -30px 0px'
+          };
+
+          const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                // Use RAF for better performance
+                requestAnimationFrame(function() {
+                  entry.target.classList.add('is-visible');
+                });
+                observer.unobserve(entry.target);
+              }
+            });
+          }, observerOptions);
+
+          fadeInSections.forEach(function(section) {
+            observer.observe(section);
+          });
+        } else {
+          // Fallback: show all sections immediately
+          fadeInSections.forEach(function(section) {
+            section.classList.add('is-visible');
+          });
+        }
+
+        // Optimized image lazy loading with skeleton and decode
+        const lazyImages = document.querySelectorAll('.img-loading img');
+
+        if ('IntersectionObserver' in window) {
+          const imageObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                const parent = img.parentElement;
+
+                // Use native lazy loading if available
+                if ('loading' in HTMLImageElement.prototype) {
+                  img.loading = 'lazy';
+                }
+
+                // Use decode() for better performance
+                if (img.complete) {
+                  parent.classList.add('loaded');
+                } else {
+                  img.decode().then(function() {
+                    parent.classList.add('loaded');
+                  }).catch(function() {
+                    parent.classList.add('loaded');
+                  });
+                }
+
+                imageObserver.unobserve(img);
+              }
+            });
+          }, { rootMargin: '50px' });
+
+          lazyImages.forEach(function(img) {
+            imageObserver.observe(img);
+          });
+        } else {
+          // Fallback for older browsers
+          lazyImages.forEach(function(img) {
+            if (img.complete) {
+              img.parentElement.classList.add('loaded');
+            } else {
+              img.addEventListener('load', function() {
+                img.parentElement.classList.add('loaded');
+              });
+            }
+          });
+        }
+
+        // Throttled scroll handler with RAF
+        function onScroll() {
+          if (!ticking) {
+            requestAnimationFrame(function() {
+              updateScrollProgress();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+
+        // Initial call
+        updateScrollProgress();
+
+        // Prefetch links on hover for faster navigation
+        if ('requestIdleCallback' in window) {
+          const prefetchedLinks = new Set();
+
+          function prefetchLink(url) {
+            if (prefetchedLinks.has(url)) return;
+
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = url;
+            link.as = 'document';
+            document.head.appendChild(link);
+            prefetchedLinks.add(url);
+          }
+
+          document.addEventListener('mouseover', function(e) {
+            const link = e.target.closest('a');
+            if (link && link.href && link.origin === location.origin) {
+              requestIdleCallback(function() {
+                prefetchLink(link.href);
+              });
+            }
+          }, { passive: true });
+        }
+
+        // Add ripple effect to buttons
+        document.addEventListener('click', function(e) {
+          const button = e.target.closest('button, .ripple');
+          if (button && !button.classList.contains('no-ripple')) {
+            button.classList.add('ripple');
+          }
+        }, { passive: true });
+
+        // Performance monitoring (only in dev)
+        if (window.location.hostname === 'localhost') {
+          if ('PerformanceObserver' in window) {
+            try {
+              const observer = new PerformanceObserver(function(list) {
+                for (const entry of list.getEntries()) {
+                  if (entry.duration > 50) {
+                    console.warn('Long task detected:', entry.duration + 'ms');
+                  }
+                }
+              });
+              observer.observe({ entryTypes: ['longtask'] });
+            } catch (e) {
+              // Longtask API not supported
+            }
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>

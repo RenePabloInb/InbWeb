@@ -1,0 +1,156 @@
+---
+const { isPrivate = false } = Astro.props as { isPrivate?: boolean };
+const now = new Date();
+const hour = now.getHours();
+const saludo = hour < 12 ? 'Buenos días' : hour < 19 ? 'Buenas tardes' : 'Buenas noches';
+
+const basePath = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const asset = (path: string) => `${basePath}${path.startsWith('/') ? path : `/${path}`}`;
+const heroVideo = asset('/videolanding.mp4');
+const privateVideo = asset('/media/privado/institucional-privado.mp4');
+const logoSrc = asset('/logo.webp');
+const fetchPriorityAttr = { fetchpriority: 'high' } as Record<string, string>;
+---
+<Fragment slot="head">
+  <link
+    rel="preload"
+    as="video"
+    href={isPrivate ? privateVideo : heroVideo}
+    type="video/mp4"
+    {...fetchPriorityAttr}
+  />
+</Fragment>
+<section
+  id="home-hero"
+  class="relative h-[85vh] min-h-[520px] md:h-screen md:min-h-[700px] w-full overflow-hidden"
+  aria-label="Hero Inbolsa"
+>
+  {isPrivate ? (
+    <div class="absolute inset-0">
+      <video
+        id="heroVideoPrivado"
+        class="w-full h-full object-cover"
+        autoplay
+        muted
+        loop
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        disablepictureinpicture
+        {...fetchPriorityAttr}
+      >
+        <source src={privateVideo} type="video/mp4" />
+      </video>
+    </div>
+  ) : (
+    <div
+      id="hero-bg"
+      class="absolute inset-0 will-change-transform"
+      style={`
+        background-color:#020617;
+        transform: translateY(var(--parallax,0px));
+      `}
+      aria-hidden="true"
+    >
+      <video
+        id="heroVideoPublic"
+        class="h-full w-full object-cover"
+        autoplay
+        muted
+        loop
+        playsinline
+        webkit-playsinline
+        preload="auto"
+        disablepictureinpicture
+        {...fetchPriorityAttr}
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
+    </div>
+  )}
+
+  <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50"></div>
+
+  <div class="relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col items-center justify-center px-4 text-center pt-16 pb-12 sm:pt-20 md:pt-0 md:pb-0">
+    <!-- Logo -->
+    <img
+      src={logoSrc}
+      alt="Inbolsa"
+      class="mb-6 h-24 w-auto sm:h-36 md:h-48 lg:h-56 drop-shadow-[0_10px_30px_rgba(0,0,0,.5)]"
+      loading="eager"
+      decoding="sync"
+    />
+
+    <!-- Saludo sutil -->
+    <p class="text-white/70 text-sm sm:text-base mb-3 sm:mb-4">{saludo}, te damos la bienvenida.</p>
+
+    <!-- Título principal - GRANDE -->
+    <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white">
+      Calidad  <span class="text-red-300">Superior</span>
+    </h1>
+
+    <!-- CTAs -->
+
+  </div>
+
+  {!isPrivate && (
+    <script is:inline>
+      const bg = document.getElementById('hero-bg');
+      const root = document.getElementById('home-hero');
+      const onScroll = () => {
+        if (!bg || !root) return;
+        const rect = root.getBoundingClientRect();
+        const scrolled = Math.max(0, -rect.top);
+        bg.style.setProperty('--parallax', (scrolled * 0.25).toFixed(1) + 'px');
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    </script>
+  )}
+
+  <script is:inline>
+    // Optimized video autoplay
+    (function() {
+      const video = document.getElementById('heroVideoPublic') || document.getElementById('heroVideoPrivado');
+
+      if (!video) return;
+
+      // Force muted for autoplay
+      video.muted = true;
+
+      // Connection-aware video loading
+      if ('connection' in navigator) {
+        const connection = navigator.connection;
+        // On slow connections, reduce video quality expectations
+        if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+          video.preload = 'none';
+        }
+      }
+
+      // Try to play immediately
+      video.play().catch(function() {
+        // iOS/Safari fallback: play on first interaction if autoplay fails
+        function playOnInteraction() {
+          video.play().catch(function() {});
+          document.removeEventListener('touchstart', playOnInteraction);
+          document.removeEventListener('click', playOnInteraction);
+        }
+        document.addEventListener('touchstart', playOnInteraction, { once: true, passive: true });
+        document.addEventListener('click', playOnInteraction, { once: true });
+      });
+
+      // Keep video playing when visible (performance optimization)
+      if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting && video.paused) {
+              video.play().catch(function() {});
+            }
+          });
+        }, { threshold: 0.5 });
+
+        videoObserver.observe(video);
+      }
+    })();
+  </script>
+</section>

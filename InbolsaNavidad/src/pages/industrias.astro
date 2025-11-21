@@ -1,0 +1,255 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import InteractiveHoverButton from '../components/InteractiveHoverButton.astro';
+import AnimatedCard from '../components/AnimatedCard.astro';
+
+const baseAsset = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const asset = (path: string) => `${baseAsset}${path.startsWith('/') ? path : `/${path}`}`;
+
+const industries = [
+  {
+    name: 'Agricola',
+    desc: 'Soluciones especializadas para el sector agrícola',
+    text: 'Arroz, granos, y semillas.',
+    detailedText: 'Ofrecemos soluciones integrales de embalaje para el sector agrícola con productos certificados para contacto alimentario, resistentes a la humedad y condiciones extremas. Nuestros sacos y big bags están diseñados específicamente para garantizar la máxima protección de productos agrícolas durante el almacenamiento y transporte.',
+    icon: null,
+    image: asset('/img/industrias/agroindustria.webp'),
+    color: 'from-emerald-500 to-green-600',
+    dotColor: 'bg-emerald-400',
+    bgColor: 'bg-emerald-50',
+    borderColor: 'border-emerald-200',
+    textColor: 'text-emerald-700',
+    products: ['Sacos de polipropileno', 'Big Bags especializados', 'Hilos agrofil'],
+    applications: ['Granos (arroz, trigo, maíz)', 'Leguminosas (soya, frijoles)', 'Azúcar y endulzantes', 'Fertilizantes químicos y orgánicos', 'Alimento para mascotas', 'Semillas certificadas'],
+    benefits: ['Certificación para contacto con alimentos', 'Resistencia a humedad y UV', 'Diseños personalizados con impresión', 'Variedad de tamaños desde 5kg hasta 50kg']
+  },
+  {
+    name: 'Metales & Químicos',
+    desc: 'Embalaje seguro para industria pesada',
+    text: 'Minería, químicos a granel, fertilizantes.',
+    detailedText: 'Especialistas en embalaje industrial para productos de alta exigencia. Nuestros Big Bags cuentan con factores de seguridad 5:1 y 6:1, certificaciones internacionales y opciones antiestáticas para productos químicos y mineros. Garantizamos máxima seguridad en el transporte y almacenamiento de materiales críticos.',
+    icon: null,
+    image: asset('/img/industrias/metales.webp'),
+    color: 'from-slate-600 to-slate-800',
+    dotColor: 'bg-slate-500',
+    bgColor: 'bg-slate-50',
+    borderColor: 'border-slate-200',
+    textColor: 'text-slate-700',
+    products: ['Sacos de alta resistencia', 'Big Bag con refuerzos', 'Sacos planos metaleros'],
+    applications: ['Litio y minerales preciosos', 'Concentrados mineros', 'Productos petroquímicos', 'Químicos a granel', 'Resinas y polímeros', 'Pigmentos industriales'],
+    benefits: ['Factor de seguridad 5:1 y 6:1', 'Materiales antiestáticos', 'Resistencia química superior', 'Certificaciones internacionales']
+  },
+  {
+    name: 'Construcción',
+    desc: 'Resistencia y durabilidad garantizada',
+    text: 'Cemento, estuco, escombros, cobertores.',
+    detailedText: 'Productos diseñados para soportar las condiciones más exigentes de la industria de la construcción. Nuestros sacos para cemento y big bags para agregados ofrecen máxima resistencia a la abrasión, impermeabilidad y facilidad de apilamiento para optimizar la logística en obra.',
+    icon: null,
+    image: asset('/img/industrias/construccion.webp'),
+    color: 'from-orange-500 to-red-600',
+    dotColor: 'bg-orange-400',
+    bgColor: 'bg-orange-50',
+    borderColor: 'border-orange-200',
+    textColor: 'text-orange-700',
+    products: ['Sacos con fondo cuadrado y válvula interior', 'Geotextiles', 'Telas con ventilaciones'],
+    applications: ['Cemento Portland y especiales', 'Agregados y áridos', 'Yeso y cal', 'Morteros secos', 'Escombros y residuos', 'Materiales de demolición'],
+    benefits: ['Máxima resistencia a cargas pesadas', 'Impermeables y anti-abrasión', 'Diseño para fácil apilamiento', 'Válvulas para llenado rápido']
+  },
+  {
+    name: 'Ganadería',
+    desc: 'Protección y durabilidad en campo abierto',
+    text: 'Suplementos para animales, manejo de granja.',
+    detailedText: 'Soluciones especializadas para el sector ganadero con tratamiento UV especial para resistir condiciones de intemperie. Nuestras telas y cobertores son transpirables, reutilizables y diseñados para proteger forrajes y productos ganaderos en almacenamiento exterior prolongado.',
+    icon: null,
+    image: asset('/img/industrias/ganaderia.webp'),
+    color: 'from-amber-500 to-yellow-600',
+    dotColor: 'bg-amber-400',
+    bgColor: 'bg-amber-50',
+    borderColor: 'border-amber-200',
+    textColor: 'text-amber-700',
+    products: ['Cobertores', 'Comederos vacunos', 'Cortinas agrícolas'],
+    applications: ['Forraje y ensilaje', 'Alimento para ganado', 'Cobertores para silos', 'Telas para invernaderos', 'Mallas para sombra', 'Protección de cultivos'],
+    benefits: ['Tratamiento UV hasta 2000 horas', 'Transpirables para productos agrícolas', 'Reutilizables múltiples temporadas', 'Resistencia a condiciones extremas']
+  },
+  {
+    name: 'Costura & Textil',
+    desc: 'Materiales de primera calidad',
+    text: 'Pita Agrofil, sogas y suministros para producción',
+    detailedText: 'Proveemos hilos industriales de algodón y nylon de alta tenacidad para la industria textil y de confección. Producción nacional con stock permanente en diversos calibres y colores para garantizar continuidad en procesos productivos de nuestros clientes.',
+    icon: null,
+    image: asset('/img/industrias/hilos.webp'),
+    color: 'from-red-500 to-red-700',
+    dotColor: 'bg-red-500',
+    bgColor: 'bg-red-50',
+    borderColor: 'border-red-200',
+    textColor: 'text-red-700',
+    products: ['Hilo reforzado', 'Hilos de costura', 'Pita Agrofil'],
+    applications: ['Costura industrial textil', 'Fabricación de sacos', 'Amarre y flejado', 'Producción de calzado', 'Marroquinería', 'Confección de lonas'],
+    benefits: ['Primera calidad certificada', 'Variedad de calibres y colores', 'Stock permanente nacional', 'Excelente relación precio-calidad']
+  },
+  {
+    name: 'Alimentación',
+    desc: 'Seguridad e higiene alimentaria',
+    text: 'Azúcar, harinas, café, frutas, verduras, alimentos animal.',
+    detailedText: 'Embalajes certificados para contacto directo con alimentos, fabricados con materiales libres de contaminantes y conforme a normativas sanitarias internacionales. Ideales para productos alimenticios secos que requieren máxima protección contra humedad y contaminación.',
+    icon: null,
+    image: asset('/img/industrias/alimentacion.webp'),
+    color: 'from-red-500 to-green-600',
+    dotColor: 'bg-red-500',
+    bgColor: 'bg-red-50',
+    borderColor: 'border-red-200',
+    textColor: 'text-red-700',
+    products: ['Sacos alimentarios', 'Sacos con termino e impresión premium', 'Sacos laminados o con liner interior'],
+    applications: ['Harinas de todo tipo', 'Cereales y granos procesados', 'Azúcar refinada', 'Sal industrial y alimentaria', 'Productos deshidratados', 'Ingredientes a granel'],
+    benefits: ['Certificación food-grade', 'Libre de contaminantes', 'Impermeables a humedad', 'Impresión personalizada HD']
+  },
+];
+
+---
+
+<Base title="Industrias — Inbolsa">
+  <Header />
+
+  <main class="bg-white">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-24 md:pt-28">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+      </div>
+      
+      <div class="hidden md:block absolute top-20 -left-20 w-96 h-96 bg-red-500/20 rounded-full blur-2xl opacity-50 animate-pulse"></div>
+      <div class="hidden md:block absolute bottom-20 -right-20 w-96 h-96 bg-red-400/20 rounded-full blur-2xl opacity-50 animate-pulse" style="animation-delay: 1s;"></div>
+      
+      <div class="relative mx-auto max-w-7xl px-4 py-16 md:py-20 lg:py-28">
+        <div class="text-center">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 text-sm text-white/90">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            Soluciones especializadas
+          </span>
+          
+          <h1 class="mt-4 md:mt-6 text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white">
+            Industrias que
+            <span class="block mt-2 bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
+              servimos
+            </span>
+          </h1>
+
+          <p class="mt-4 md:mt-6 text-base md:text-lg lg:text-xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+            Desde 1974 brindando soluciones de envases tejidos de alta calidad para sectores exigentes.
+            Innovación, resistencia y compromiso en cada producto.
+          </p>
+
+          <div class="mt-10 flex flex-wrap justify-center gap-4">
+            <InteractiveHoverButton href="#industrias" variant="primary" size="lg">
+              Explorar industrias
+            </InteractiveHoverButton>
+            <InteractiveHoverButton href="/contacto" variant="ghost" size="lg">
+              Contáctanos
+            </InteractiveHoverButton>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+          <path d="M0 0L60 8.33C120 16.7 240 33.3 360 41.7C480 50 600 50 720 45C840 40 960 30 1080 28.3C1200 26.7 1320 33.3 1380 36.7L1440 40V100H1380C1320 100 1200 100 1080 100C960 100 840 100 720 100C600 100 480 100 360 100C240 100 120 100 60 100H0V0Z" fill="white"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Industrias Grid -->
+    <section id="industrias" class="py-12 md:py-16 lg:py-24 bg-white">
+      <div class="mx-auto max-w-7xl px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {industries.map((industry, index) => (
+            <AnimatedCard variant="gradient">
+              <div class="p-8">
+                <div class={`absolute inset-0 bg-gradient-to-br ${industry.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+
+                <div class="relative">
+                  <div class={`relative mb-6 rounded-[32px] overflow-hidden border-2 ${industry.borderColor} bg-slate-900/5 min-h-[280px]`}>
+                    <img
+                      src={industry.image}
+                      alt={`Industria ${industry.name}`}
+                      class="absolute inset-0 h-full w-full object-cover opacity-35 group-hover:opacity-100 scale-110 group-hover:scale-100 transition duration-700 ease-out"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/30 to-slate-900/80 opacity-90 group-hover:opacity-60 transition duration-500"></div>
+                    <div class="relative flex items-center gap-4 p-6">
+                      <div class="flex-1 text-white drop-shadow-lg">
+                        <p class="text-sm uppercase tracking-[0.3em] opacity-80">Sector</p>
+                        <p class="text-lg font-semibold">{industry.name}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="text-slate-500 text-sm mb-4">{industry.desc}</p>
+                  <p class="text-slate-600 text-base mb-6">{industry.text}</p>
+
+                  <div class="grid gap-2">
+                    {industry.products.slice(0, 3).map((product) => (
+                      <div class="flex items-center gap-2 text-sm text-slate-600">
+                        <span class={`w-2.5 h-2.5 rounded-full ${industry.dotColor}`}></span>
+                        {product}
+                      </div>
+                    ))}
+                  </div>
+
+                  <div class="mt-6 flex flex-wrap gap-2">
+                    {industry.applications.slice(0, 3).map((app) => (
+                      <span class="px-3 py-1 rounded-full bg-slate-100 text-xs text-slate-500">
+                        {app}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div class={`absolute -bottom-6 -right-6 w-24 h-24 rounded-full bg-gradient-to-br ${industry.color} opacity-0 group-hover:opacity-10 blur-2xl transition-opacity duration-500`}></div>
+              </div>
+            </AnimatedCard>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-12 md:py-16 lg:py-20 bg-gradient-to-br from-red-600 via-red-700 to-red-800 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+      </div>
+
+      <div class="relative mx-auto max-w-4xl px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+          ¿Listo para empezar tu proyecto?
+        </h2>
+        <p class="text-xl text-white/90 mb-10">
+          Nuestro equipo está listo para asesorarte y encontrar la mejor solución para tu industria
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+          <InteractiveHoverButton
+            href="/contacto"
+            variant="secondary"
+            size="lg"
+          >
+            Solicitar cotización
+          </InteractiveHoverButton>
+          <InteractiveHoverButton
+            href="/historia"
+            variant="ghost"
+            size="lg"
+          >
+            Conoce nuestra historia
+          </InteractiveHoverButton>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>

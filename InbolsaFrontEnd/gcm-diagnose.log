@@ -1,0 +1,223 @@
+﻿Diagnose log at 2025-11-21T18:03:52Z
+
+AppPath: C:\Program Files\Git\mingw64\bin\git-credential-manager.exe
+InstallDir: C:\Program Files\Git\mingw64\bin\
+Version: 2.6.1+786ab03440ddc82e807a97c0e540f5247e44cec6
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 26100)
+Reading environment variables... OK
+ Variables:
+MSYSTEM_CHOST=x86_64-w64-mingw32
+_=C:/Program Files/Git/mingw64/bin/git
+ORIGINAL_TMP=C:/Users/ASISTE~1/AppData/Local/Temp
+PUBLIC=C:\Users\Public
+ALLUSERSPROFILE=C:\ProgramData
+LOGONSERVER=\\WIN2008AD
+INFOPATH=C:\Program Files\Git\mingw64\local\info;C:\Program Files\Git\mingw64\share\info;C:\Program Files\Git\usr\local\info;C:\Program Files\Git\usr\share\info;C:\Program Files\Git\usr\info;C:\Program Files\Git\share\info
+LOCALAPPDATA=C:\Users\asistemas\AppData\Local
+ProgramData=C:\ProgramData
+USERDNSDOMAIN=INBOLSA.COM.BO
+PKG_CONFIG_PATH=C:\Program Files\Git\mingw64\lib\pkgconfig;C:\Program Files\Git\mingw64\share\pkgconfig
+TMPDIR=C:\Users\ASISTE~1\AppData\Local\Temp
+ORIGINAL_PATH=C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\asistemas\bin;C:\Users\asistemas\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;C:\Users\asistemas\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Python313\Scripts;C:\Python313;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\cloudflared;C:\Program Files\dotnet;C:\Users\asistemas\AppData\Local\Microsoft\WindowsApps;C:\Users\asistemas\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\asistemas\AppData\Roaming\npm;C:\Users\asistemas\AppData\Local\Microsoft\WinGet\Packages\Ngrok.Ngrok_Microsoft.Winget.Source_8wekyb3d8bbwe
+ZES_ENABLE_SYSMAN=1
+ACLOCAL_PATH=C:\Program Files\Git\mingw64\share\aclocal;C:\Program Files\Git\usr\share\aclocal
+ProgramW6432=C:\Program Files
+MINGW_PREFIX=C:/Program Files/Git/mingw64
+EFC_51808_2283032206=1
+SYSTEMROOT=C:\Windows
+EFC_51808_1262719628=1
+MANPATH=C:\Program Files\Git\mingw64\local\man;C:\Program Files\Git\mingw64\share\man;C:\Program Files\Git\usr\local\man;C:\Program Files\Git\usr\share\man;C:\Program Files\Git\usr\man;C:\Program Files\Git\share\man
+WINDIR=C:\Windows
+CONFIG_SITE=C:/Program Files/Git/etc/config.site
+VSCODE_GIT_ASKPASS_MAIN=c:\Users\asistemas\AppData\Local\Programs\Microsoft VS Code\resources\app\extensions\git\dist\askpass-main.js
+SHELL=C:\Program Files\Git\usr\bin\bash.exe
+MSYSTEM=MINGW64
+OS=Windows_NT
+PROCESSOR_ARCHITECTURE=x86
+CLAUDE_CODE_SSE_PORT=39664
+MINGW_PACKAGE_PREFIX=mingw-w64-x86_64
+SHLVL=1
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW
+DISPLAY=needs-to-be-defined
+ENABLE_IDE_INTEGRATION=true
+ORIGINAL_TEMP=C:/Users/ASISTE~1/AppData/Local/Temp
+CommonProgramW6432=C:\Program Files\Common Files
+ProgramFiles(x86)=C:\Program Files (x86)
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+COMSPEC=C:\Windows\system32\cmd.exe
+MSYSTEM_CARCH=x86_64
+USERNAME=asistemas
+GIT_ASKPASS=c:\Users\asistemas\AppData\Local\Programs\Microsoft VS Code\resources\app\extensions\git\dist\askpass.sh
+MINGW_CHOST=x86_64-w64-mingw32
+TERM=xterm-256color
+ORIGINAL_XDG_CURRENT_DESKTOP=undefined
+LANG=en_US.UTF-8
+PATH=C:/Program Files/Git/mingw64/libexec/git-core;C:\Users\asistemas\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\asistemas\bin;C:\Users\asistemas\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;C:\Users\asistemas\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Python313\Scripts;C:\Python313;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files (x86)\cloudflared;C:\Program Files\dotnet;C:\Users\asistemas\AppData\Local\Microsoft\WindowsApps;C:\Users\asistemas\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\asistemas\AppData\Roaming\npm;C:\Users\asistemas\AppData\Local\Microsoft\WinGet\Packages\Ngrok.Ngrok_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+OneDrive=C:\Users\asistemas\OneDrive
+PSModulePath=C:\Program Files\WindowsPowerShell\Modules;C:\Windows\system32\WindowsPowerShell\v1.0\Modules
+PROCESSOR_REVISION=8d01
+GIT_EXEC_PATH=C:/Program Files/Git/mingw64/libexec/git-core
+PWD=C:/Users/asistemas/InbWeb/InbolsaFrontEnd
+APPDATA=C:\Users\asistemas\AppData\Roaming
+FPS_BROWSER_APP_PROFILE_STRING=Internet Explorer
+COMPUTERNAME=INB-WA010
+FPS_BROWSER_USER_PROFILE_STRING=Default
+DriverData=C:\Windows\System32\Drivers\DriverData
+ChocolateyLastPathUpdate=134027820268572909
+PLINK_PROTOCOL=ssh
+PROCESSOR_LEVEL=6
+EXEPATH=C:\Program Files\Git\bin
+HOMEDRIVE=C:
+PKG_CONFIG_SYSTEM_INCLUDE_PATH=C:/Program Files/Git/mingw64/include
+OneDriveConsumer=C:\Users\asistemas\OneDrive
+PKG_CONFIG_SYSTEM_LIBRARY_PATH=C:/Program Files/Git/mingw64/lib
+PROGRAMFILES=C:\Program Files (x86)
+SSH_ASKPASS=C:/Program Files/Git/mingw64/bin/git-askpass.exe
+USERPROFILE=C:\Users\asistemas
+EFC_51808_3789132940=1
+GIT_TRACE2_PARENT_SID=541b0887-a917-49ef-81aa-1d4fb898d94b
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 141 Stepping 1, GenuineIntel
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+EFC_51808_1592913036=1
+SESSIONNAME=Console
+TMP=C:\Users\ASISTE~1\AppData\Local\Temp
+TERM_PROGRAM_VERSION=1.106.2
+HOSTNAME=INB-WA010
+TERM_PROGRAM=vscode
+USERDOMAIN=INBOLSA
+NUMBER_OF_PROCESSORS=16
+PS1=\[]633;A\]\[\033]0;$TITLEPREFIX:$PWD\007\]\n\[\033[32m\]\u@\h \[\033[35m\]$MSYSTEM \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n$ \[]633;B\]
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_79320_GRILRRDJYTBOREVF
+SYSTEMDRIVE=C:
+VSCODE_GIT_ASKPASS_NODE=C:\Users\asistemas\AppData\Local\Programs\Microsoft VS Code\Code.exe
+USERDOMAIN_ROAMINGPROFILE=INBOLSA
+COMMONPROGRAMFILES=C:\Program Files (x86)\Common Files
+ChocolateyInstall=C:\ProgramData\chocolatey
+EFC_51808_2775293581=1
+VSCODE_GIT_IPC_HANDLE=\\.\pipe\vscode-git-0d89069ea0-sock
+VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
+HOMEPATH=\Users\asistemas
+COLORTERM=truecolor
+HOME=C:\Users\asistemas
+MSYSTEM_PREFIX=C:/Program Files/Git/mingw64
+PROCESSOR_ARCHITEW6432=AMD64
+TEMP=C:\Users\ASISTE~1\AppData\Local\Temp
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\asistemas\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\asistemas\AppData\Local\Temp\3d3f4ec889682ec194c94455'... OK
+Reading from temporary file 'C:\Users\asistemas\AppData\Local\Temp\3d3f4ec889682ec194c94455'... OK
+Deleting temporary file 'C:\Users\asistemas\AppData\Local\Temp\3d3f4ec889682ec194c94455'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\asistemas
+UserDataDirectoryPath: C:\Users\asistemas\.gcm
+GetCurrentDirectory(): C:\Users\asistemas\InbWeb\InbolsaFrontEnd
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: True
+Exception: None
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com...Sending HEAD request to https://example.com... OK
+ OK
+Acquiring free TCP port... OK
+Testing local HTTP loopback connections...
+Creating new HTTP listener for http://localhost:54425/... OK
+Waiting for loopback connection... OK
+Writing response... OK
+Waiting for response data... OK
+Loopback connection data OK
+
+------------
+Diagnostic: Git
+Skipped: False
+Success: True
+Exception: None
+Log:
+Getting Git version... OK
+Git version is '2.51.0.windows.1'
+Locating current repository...Git repository at 'C:/Users/asistemas/InbWeb/.git'
+ OK
+Listing all Git configuration... OK
+Git configuration:
+file:C:/Program Files/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.process=git-lfs filter-process
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.required=true
+file:C:/Program Files/Git/etc/gitconfig	http.sslbackend=schannel
+file:C:/Program Files/Git/etc/gitconfig	core.autocrlf=true
+file:C:/Program Files/Git/etc/gitconfig	core.fscache=true
+file:C:/Program Files/Git/etc/gitconfig	core.symlinks=false
+file:C:/Program Files/Git/etc/gitconfig	pull.rebase=false
+file:C:/Program Files/Git/etc/gitconfig	credential.helper=manager
+file:C:/Program Files/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=master
+file:C:/Users/asistemas/.gitconfig	core.editor="C:\Users\asistemas\AppData\Local\Programs\Microsoft VS Code\bin\code" --wait
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=false
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.symlinks=false
+file:.git/config	core.ignorecase=true
+file:.git/config	remote.origin.url=https://github.com/RenePabloInb/InbWeb.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+file:.git/config	branch.main.remote=origin
+file:.git/config	branch.main.merge=refs/heads/main
+file:.git/config	branch.main.vscode-merge-base=origin/main
+
+
+------------
+Diagnostic: Credential storage
+Skipped: False
+Success: True
+Exception: None
+Log:
+ICredentialStore instance is of type: CredentialStore
+Writing test credential... OK
+Reading test credential... OK
+Deleting test credential... OK
+
+------------
+Diagnostic: Microsoft authentication (AAD/MSA)
+Skipped: False
+Success: True
+Exception: None
+Log:
+Broker is not enabled.
+Flow type is: Auto
+Gathering MSAL token cache data... OK
+CacheDirectory: C:\Users\asistemas\AppData\Local\.IdentityService
+CacheFileName: msal.cache
+CacheFilePath: C:\Users\asistemas\AppData\Local\.IdentityService\msal.cache
+Creating cache helper... OK
+Verifying MSAL token cache persistence... OK
+
+------------
+Diagnostic: GitHub API
+Skipped: False
+Success: True
+Exception: None
+Log:
+Using 'https://github.com/' as API target.
+Querying '/meta' endpoint... OK
+

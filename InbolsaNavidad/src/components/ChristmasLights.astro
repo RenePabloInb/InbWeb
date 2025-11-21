@@ -1,0 +1,94 @@
+---
+---
+<div class="christmas-lights-container fixed top-20 md:top-24 left-0 right-0 z-40 pointer-events-none overflow-hidden">
+  <div class="lights-wire">
+    {Array.from({ length: 20 }).map((_, i) => (
+      <div class="light-bulb" style={`--delay: ${i * 0.15}s; --color: ${['#ff0000', '#00ff00', '#ffd700', '#0066ff', '#ffffff'][i % 5]}`}>
+        <div class="bulb-cap"></div>
+        <div class="light"></div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .christmas-lights-container {
+    height: 60px;
+    background: transparent;
+  }
+
+  .lights-wire {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    padding: 0 10px;
+    position: relative;
+  }
+
+  .lights-wire::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #1a1a1a;
+    border-radius: 2px;
+  }
+
+  .light-bulb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: swing 2s ease-in-out infinite;
+    animation-delay: var(--delay);
+    transform-origin: top center;
+  }
+
+  .bulb-cap {
+    width: 8px;
+    height: 10px;
+    background: #333;
+    border-radius: 2px 2px 0 0;
+  }
+
+  .light {
+    width: 18px;
+    height: 26px;
+    background: var(--color);
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    box-shadow:
+      0 0 10px var(--color),
+      0 0 20px var(--color),
+      0 0 30px var(--color);
+    animation: glow 1.5s ease-in-out infinite;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes swing {
+    0%, 100% { transform: rotate(-3deg); }
+    50% { transform: rotate(3deg); }
+  }
+
+  @keyframes glow {
+    0%, 100% {
+      opacity: 1;
+      filter: brightness(1);
+    }
+    50% {
+      opacity: 0.7;
+      filter: brightness(0.8);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .light-bulb:nth-child(even) {
+      display: none;
+    }
+    .light {
+      width: 14px;
+      height: 20px;
+    }
+  }
+</style>
