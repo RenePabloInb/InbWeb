@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# Bloquear acceso directo a carpetas de almacenamiento
+RewriteRule ^storage/ - [F,L]
+
+# Permitir acceso directo a archivos que existen
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Enviar todo lo demás a index.php
+RewriteRule ^ index.php [QSA,L]
+
+# CORS headers
+<IfModule mod_headers.c>
+Header set Access-Control-Allow-Origin "https://inbolsa.net"
+Header set Access-Control-Allow-Credentials "true"
+Header set Access-Control-Allow-Methods "GET, POST, OPTIONS"
+Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
