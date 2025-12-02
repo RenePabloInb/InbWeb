@@ -1,2 +1,1 @@
-# InbWebFE
-Inbolsa Web FE
+# InbWeb
